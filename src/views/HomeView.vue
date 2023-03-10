@@ -3,19 +3,21 @@ import { RouterLink } from "vue-router";
 </script>
 
 <template>
+
   <header>
     <div class="texts">
-      <h1 class="texts__title">Basic authentication with VueJS and Firebase</h1>
+      <h1 class="texts__title">Bien Venidos</h1>
     </div>
   </header>
-  <section class="buttons">
-    <router-link class="buttons__btn buttons__btn--login" to="/login"
-      >Login</router-link
-    >
 
+  <section class="buttons">
+
+    <router-link class="buttons__btn buttons__btn--login" to="/login"
+      >Login</router-link>
+      
     <router-link class="buttons__btn buttons__btn--register" to="/register"
-      >Register</router-link
-    >
+      >Register</router-link>
+
   </section>
 </template>
 
@@ -30,7 +32,7 @@ header {
   overflow: hidden;
   color: #fff;
   text-align: center;
-  clip-path: polygon(100% 0, 100% 70%, 50% 100%, 0 70%, 0 0);
+  clip-path:()(100% 0, 100% 70%, 50% 100%, 0 70%, 0 0);
   margin-bottom: 50px;
 }
 
@@ -42,7 +44,11 @@ header {
 }
 
 .texts__title {
-  font-size: 3.5rem;
+  display: flex;
+  align-content:center;
+  font-size: 5.5rem;
+  background-color: #f53131;
+  
 }
 
 .buttons {
@@ -53,7 +59,7 @@ header {
 .buttons__btn {
   text-decoration: none;
   padding: 1.3em 3em;
-  font-size: 12px;
+  font-size: 19px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -68,8 +74,8 @@ header {
 }
 
 .buttons__btn--login:hover {
-  background-color: #27ca89;
-  box-shadow: 0px 15px 20px rgba(41, 207, 141, 0.4);
+  background-color: #070373;
+  box-shadow: 5px 15px 20px rgba(69, 103, 241, 0.4);
   transform: translateY(-7px);
 }
 
@@ -80,6 +86,6 @@ header {
 }
 
 .buttons__btn:active {
-  transform: translateY(-1px);
+  transform: translateY(-9px);
 }
 </style>
