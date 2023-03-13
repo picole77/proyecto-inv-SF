@@ -24,6 +24,7 @@ export const useUserStore = defineStore("user", {
                 return;
             }
             this.user =auth.currentUser;
+            console.log("usuario registrado correctamente");
         }
     }
     
