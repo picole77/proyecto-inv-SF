@@ -7,7 +7,8 @@ This is a simple application to create a basic authentication using Firebase, Pi
 This project uses [PNPM](https://pnpm.io/)
 
 ```bash
-  git clone https://github.com/Wiar8/vue-authentication-app.git
+  git clone https://github.com/Wiar8/vue-authentication-app.git https://github.com/picole77/proyecto-inv-SF
+ 
   cd vue-authentication-app
   pnpm install
   pnpm run dev
