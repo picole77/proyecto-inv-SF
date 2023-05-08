@@ -21,38 +21,40 @@
       <div>
 
       <router-link to="/">
-      <v-btn  color="#primary" text> 
-        <span class="mr-2"><v-icon icon="md:home"></v-icon>login</span>
+      <v-btn  target ="_blank" text> 
+        <span   class="font-weight-black">login</span>
       </v-btn>
     </router-link>
 
-      <router-link to="/seguridad">
-      <v-btn target ="_blank" text >
-        <span class="mr-2">seguridad</span>
-      </v-btn>
-    </router-link>
+      
 
-    <router-link to="/dash">
+    <router-link to="/src/views/dash.vue">
       <v-btn  target="_blank" text>
-        <span class="mr-2">inicio</span>
+        <span class="font-weight-black">Inicio</span>
       </v-btn>
     </router-link>
 
     <router-link to="/src/views/articulos/listar.vue">
       <v-btn target ="_blank" text >
-        <span class="mr-2">inventario</span>
+        <span class="font-weight-black">Inventario General</span>
+      </v-btn>
+    </router-link>
+    
+    <router-link to="/seguridad">
+      <v-btn target ="_blank" text >
+        <span class="font-weight-black">Inventario Cocina</span>
       </v-btn>
     </router-link>
     
     <router-link to="/ventas">
       <v-btn target ="_blank" text >
-        <span class="mr-2">ventas</span>
+        <span class="font-weight-black">Ventas</span>
       </v-btn>
     </router-link>
 
     <router-link to="/reporte">
       <v-btn target ="_blank" text >
-        <span class="mr-2">reporte</span>
+        <span class="font-weight-black">Reportes</span>
       </v-btn>
     </router-link>
   </div>
@@ -74,3 +76,4 @@ export default {
   }),
 };
 </script>
+

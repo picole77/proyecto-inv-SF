@@ -1,19 +1,19 @@
 
 <template>
-  <inicio/>
+  <barranavegacion/>
 
 
 </template>
 
 <script>
-import Inicio from '@/components/inicio.vue'
-  import HelloWorld from '../components/HelloWorld'
+import barranavegacion from '@/components/barranavegacion.vue'
+ 
 
   export default {
     name: 'Home',
 
     components: {
-        Inicio,
+        barranavegacion,
     },
   }
 </script>
