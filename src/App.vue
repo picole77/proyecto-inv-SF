@@ -12,7 +12,7 @@
           contain
           src="./assets/cropped-logo-eric.webp"
           transition="scale-transition"
-          width="40"
+          width="90"
         />
 
     
@@ -28,11 +28,7 @@
 
       
 
-    <router-link to="/src/views/dash.vue">
-      <v-btn  target="_blank" text>
-        <span class="font-weight-black">Inicio</span>
-      </v-btn>
-    </router-link>
+    
 
     <router-link to="/src/views/articulos/listar.vue">
       <v-btn target ="_blank" text >
@@ -40,7 +36,9 @@
       </v-btn>
     </router-link>
     
-    <router-link to="/seguridad">
+    
+    
+    <router-link to="/src/views/arti_cocina/listar.vue">
       <v-btn target ="_blank" text >
         <span class="font-weight-black">Inventario Cocina</span>
       </v-btn>
@@ -55,6 +53,12 @@
     <router-link to="/reporte">
       <v-btn target ="_blank" text >
         <span class="font-weight-black">Reportes</span>
+      </v-btn>
+    </router-link>
+    
+    <router-link to="/src/views/dash.vue">
+      <v-btn  target="_blank" text>
+        <span class="font-weight-black">Inicio</span>
       </v-btn>
     </router-link>
   </div>

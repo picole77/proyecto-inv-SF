@@ -21,6 +21,23 @@ const routes = [
     name: 'pico',
     component: () => import('@/views/dash.vue'),
   },
+  // articulos cocina ---------
+
+  //lista articulos
+  {
+    path: '/src/views/arti_cocina/listar.vue',
+    name: 'listar',
+    component: () => import('@/views/articulos/listar.vue'),
+  },
+  
+    // editar
+    {
+      path: '/src/views/arti_cocina/editar.vue/:id',
+      name: 'editar',
+      component: () => import('@/views/articulos/editar.vue'),
+    },
+
+    //inventario general (articulos) --------------------------------------------------------------------------------------
   //lista articulos
   {
     path: '/src/views/articulos/listar.vue',
@@ -43,12 +60,13 @@ const routes = [
     component: () => import('@/views/articulos/editar.vue'),
   },
 
+  //ventas
   {
     path: '/ventas',
     name: 'ventas',
     component: () => import('@/views/ventas.vue'),
   },
-
+// reporte
   {
     path: '/reporte',
     name: 'reporte',
