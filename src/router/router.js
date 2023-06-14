@@ -64,7 +64,7 @@ const routes = [
   {
     path: '/ventas',
     name: 'ventas',
-    component: () => import('@/views/ventas.vue'),
+    component: () => import('@/views/ventas/ventas.vue'),
   },
 // reporte
   {
@@ -74,6 +74,8 @@ const routes = [
       return import('../views/reporte.vue')
     }
   },
+
+ 
 ]
 
 const router = new VueRouter({
