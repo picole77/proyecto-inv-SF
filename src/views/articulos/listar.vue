@@ -63,7 +63,7 @@
 </template>
 
 <script>
-let url = 'http://localhost:3000/api/articulos/';
+let url = 'http://localhost:3000/api/articulos?page=1&limit=25';
 import axios from 'axios';
 export default{
   name:'listar',
@@ -80,7 +80,7 @@ export default{
     obtenerArticulos(){
       axios.get(url)
       .then(response => {
-      this.articulos = response.data;
+      this.articulos = response.data.data;
       })
       .catch((error) => {
         console.log(error);
