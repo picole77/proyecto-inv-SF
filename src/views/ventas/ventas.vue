@@ -1,124 +1,101 @@
 <template>
-   <v-card>
-     <v-card-title>
-       Nutrition
-       <v-spacer></v-spacer>
-       <v-text-field
-         v-model="search"
-         append-icon="mdi-magnify"
-         label="Search"
-         single-line
-         hide-details
-       ></v-text-field>
-     </v-card-title>
-     <v-data-table
-       :headers="headers"
-       :items="desserts"
-       :search="search"
-     ></v-data-table>
-   </v-card>
- </template>
+  <div>
+    <v-container id="listar" fluid tag="section">
+      <v-btn to="/articulos/crear" fab darck color="#00c853"><v-icon>mdi-plus</v-icon></v-btn>
+
+      <base-material-card icon="mdi-clipboard-text" title="Simple Table" class="px-5 py-3">
+        <v-simple-table>
+          <thead>
+            <tr>
+              <th class="primary--text">
+                ID
+              </th>
+              <th class="primary--text">
+                Descripcion
+              </th>
+              <th class="primary--text">
+                Precio
+              </th>
+              <th class="primary--text">
+                Stock
+              </th>
+              <th class="text-right primary--text">
+                Acciones
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr v-for="articulo in articulos" :key="articulo.id">
+              <td>{{ articulo.id }}</td>
+              <td>{{ articulo.descripcion }}</td>
+              <td>{{ articulo.precio.toFixed(2) }}</td>
+              <td>{{ articulo.stock }}</td>
+
+
+              <td>
+                <v-btn :to="{ name: 'editar', params: { id: articulo.id } }" fab small
+                  color="light-blue"><v-icon>mdi-pencil</v-icon></v-btn>
+                <v-btn @click.stop="dialog = true" @click=" id = articulo.id" fab small
+                  color="orange darken-4"><v-icon>mdi-delete</v-icon></v-btn>
+              </td>
+
+
+            </tr>
+          </tbody>
+        </v-simple-table>
+      </base-material-card>
+
+      <v-dialog v-model="dialog" max-whidth="350">
+        <v-card>
+          <v-card-title class="headline">¿Desea eliminar el registro?</v-card-title>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <V-btn @click="dialog = false">Cancelar</V-btn>
+            <V-btn @click="confirmarBorrado(id)" color="error">Aceptar</V-btn>
+          </v-card-actions>
+        </v-card>
+
+      </v-dialog>
+
+    </v-container>
+  </div>
+</template>
+
 <script>
+let url = 'http://localhost:3000/api/articulos?page=1&limit=25';
+import axios from 'axios';
 export default {
-  data () {
+  name: 'listar',
+  mounted() {
+    this.obtenerArticulos();
+  },
+  data() {
     return {
-      search: '',
-      headers: [
-        {
-          align: 'start',
-          key: 'name',
-          sortable: false,
-          title: 'Dessert (100g serving)',
-        },
-        { key: 'calories', title: 'Calories' },
-        { key: 'fat', title: 'Fat (g)' },
-        { key: 'carbs', title: 'Carbs (g)' },
-        { key: 'protein', title: 'Protein (g)' },
-        { key: 'iron', title: 'Iron (%)' },
-      ],
-      desserts: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: 1,
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: 1,
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: 7,
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: 8,
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: 16,
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: 0,
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: 2,
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: 45,
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: 22,
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: 6,
-        },
-      ],
+      dialog: false,
+      articulos: null
     }
   },
+  methods: {
+    obtenerArticulos() {
+      axios.get(url)
+        .then(response => {
+          this.articulos = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    },
+    confirmarBorrado(id) {
+      axios.delete(url + id)
+        .then(() => {
+          this.obtenerArticulos();
+          this.dialog = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+  }
 }
 </script>

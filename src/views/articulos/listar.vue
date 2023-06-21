@@ -1,14 +1,27 @@
 <template>
 <div>
+  
   <v-container id="listar" fluid tag="section">
+         <v-card
+            color="red-lighten-4"
+            flat
+            height="80px"
+            rounded="0"
+          >
+            <v-toolbar class="font-weight-black my-3" elevation="1" rounded color="lime accent-4" density="compact">
+              <v-toolbar-title>Inventario general</v-toolbar-title>
+            </v-toolbar>
+          </v-card>
+
   <v-btn to="/articulos/crear" fab darck color="#00c853"><v-icon>mdi-plus</v-icon></v-btn>
     
       <base-material-card icon="mdi-clipboard-text" 
       title="Simple Table" 
       class="px-5 py-3">
-      <v-simple-table>
+      <h5>agregar articulo</h5>
+      <v-simple-table >
         <thead>
-          <tr>
+          <tr class="text-subtitle-8">
             <th class="primary--text">
               ID
             </th>
@@ -27,7 +40,7 @@
           </tr>
         </thead>
 
-        <tbody>
+        <tbody class="font-weight-bold">
           <tr v-for="articulo in articulos" :key="articulo.id">
             <td>{{ articulo.id }}</td>
             <td>{{ articulo.descripcion}}</td>
