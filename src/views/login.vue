@@ -80,34 +80,53 @@
                                 <v-window-item :value="2">
                                     <v-row class="fill-height"> 
                                         <v-col cols="12" my="1">
-                                            <v-card-text class="my-1">" 
-                                                <h3 class="text-center   font-weight-black  text-h3 teal--text text--light-blue-darken-" >crear cuenta</h3>
+                                            <v-card-text class="my-1">
+                                                <v-col cols="12">
+                                                    <v-img
+                                                        :src="require('../assets/cropped-logo-eric.webp')"
+                                                        class="my-1"
+                                                        contain
+                                                        height="150"/>
+                                                </v-col> 
+                                                <h3 class="text-center   font-weight-black  text-h3 teal--text text--light-blue-darken-" >Crear Cuenta</h3>
                                                 
-                                                <h4 class="text-center mt-3 font-weight-black teal--text text--light-blue-darken-4">ingresar datos para registrarse</h4>
-                                                <v-form>
+                                                <h4 class="text-center mt-3 font-weight-black teal--text text--light-blue-darken-4">Ingresar datos para registrarse</h4>
+                                                <v-form @submit.prevent="register">
                                                     <v-text-field
-                                                    label="Crear Nombre de Usuario"
+                                                    label="Nombre"
+                                                    name="name"
+                                                    prepend-icon="person"
+                                                    type="text"
+                                                    v-model="new_name"
+                                                    color="teal accent-3"/>
+
+                                                    <v-text-field
+                                                    label="Nombre de Usuario"
                                                     name="name"
                                                     prepend-icon="person"
                                                     type="text"
                                                     v-model="new_username"
                                                     color="teal accent-3"/>
-                                                    <!-- <v-text-field
-                                                    label="Email"
-                                                    name="Email"
-                                                    prepend-icon="email"
-                                                    type="text"
-                                                    color="teal accent-3"/> -->
+
                                                     <v-text-field
-                                                        label="Crear Password"
+                                                    label="Correo Electrónico"
+                                                    name="email"
+                                                    prepend-icon="email"
+                                                    v-model="new_email"
+                                                    type="email"
+                                                    color="teal accent-3"/>
+
+                                                    <v-text-field
+                                                        label="Contraseña"
                                                         name="Password"
                                                         prepend-icon="lock"
                                                         type="password"
                                                         v-model="new_password"
                                                         color="teal accent-3"
                                                     />
+
                                                     <div class="text-center mt-1"> 
-                                                        <v-btn class="font-weight-black my-3" elevation="1" rounded color="lime accent-4">Crear Cuenta</v-btn>
+                                                        <v-btn type="submit" class="font-weight-black my-3" elevation="1" rounded color="lime accent-4">Crear Cuenta</v-btn>
                                                     </div>
                                                 </v-form>
                                             </v-card-text>
@@ -118,7 +137,6 @@
                         </v-card>
                     </v-col>
                 </v-row>
-
             </v-container>
         </v-main> 
     </v-app>
@@ -134,6 +152,8 @@ export default {
             step: 1,
             username: '',
             password: '',
+            new_name: '',
+            new_email: '',
             new_username: '',
             new_password: ''
         }
@@ -157,7 +177,22 @@ export default {
             });
 
         },
-        
+        register: async function() {
+            let url = 'http://localhost:3000/register'
+            await axios.post(url,{ 
+                name: this.new_name,
+                username: this.new_username,
+                email: this.new_email,
+                password: this.new_password
+            })
+            .then(function(response) {
+                console.log(response);
+                this.messages = response.message
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        }
     }
     
 }
