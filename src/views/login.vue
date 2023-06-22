@@ -35,7 +35,7 @@
                                                         <v-icon>fab fa-linkedin-in</v-icon>
                                                     </v-btn>
                                                 </div> -->
-                                                <v-form> 
+                                                <v-form @submit.prevent="login"> 
                                                     <h4 class="text-center mt-1 teal--text text--light-blue-darken-1">ingrese usuario y password</h4>
                                                     
                                                     <v-text-field
@@ -43,6 +43,7 @@
                                                     name="name"
                                                     prepend-icon="person"
                                                     type="text"
+                                                    v-model="user"
                                                     color="teal accent-3"/>
 
                                                    <!-- <v-text-field
@@ -58,12 +59,13 @@
                                                     name="Password"
                                                     prepend-icon="lock"
                                                     type="password"
+                                                    v-model="pass"
                                                     color="teal accent-3"/>
                                                 </v-form>
                                             </v-card-text>
 
                                             <div class="text-center my-1">
-                                                <v-btn class="font-weight-black my-3" elevation="1" rounded color="lime accent-4">Iniciar Sesión</v-btn>
+                                                <v-btn class="font-weight-black my-3" elevation="1" type="submit" rounded color="lime accent-4">Iniciar Sesión</v-btn>
                                             </div>
                                         </v-col>
                                         
@@ -90,6 +92,7 @@
                                                     name="name"
                                                     prepend-icon="person"
                                                     type="text"
+                                                    v-model="user"
                                                     color="teal accent-3"/>
                                                     <!-- <v-text-field
                                                     label="Email"
@@ -102,6 +105,7 @@
                                                     name="Password"
                                                     prepend-icon="lock"
                                                     type="password"
+                                                    v-model="pass"
                                                     color="teal accent-3"/>
                                                 </v-form>
                                             </v-card-text>
@@ -109,11 +113,6 @@
                                                 <v-btn class="font-weight-black my-3" elevation="1" rounded color="lime accent-4">Crear Cuenta</v-btn>
                                             </div>
                                         </v-col>
-                                                    >
-                                               
-                                            
-                                            
-                                        
                                     </v-row>
                                 </v-window-item>
                             </v-window>
@@ -129,18 +128,37 @@
 <script>
 export default {
         data: ()=>({
-            step: 1
+        step: 1,
+            user: "",
+            pass: ""
         }),
         props: {
             source: String
-        }
+    },
+    methods: {
+        login() {
+            let url = 'http://localhost:3000/login'
+            axios.post(url, {
+                user: this.user,
+                pass: this.pass
+            })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+        },
+        
+    }
     
     }
 </script>
 
 <style scoped>
 main {
-  background-image: url('@/assets/comida.jpeg');
-  background-size:cover;
+background-image: url('@/assets/comida.jpeg');
+background-size:cover;
 }
 </style>

@@ -17,11 +17,14 @@
                 Precio
               </th>
               <th class="primary--text">
-                Stock
+                Cantidad
               </th>
               <th class="text-right primary--text">
-                Acciones
+                Vendedor
               </th>
+              <th class="text-right primary--text">
+                  Venta
+                </th>
             </tr>
           </thead>
 
@@ -31,7 +34,7 @@
               <td>{{ articulo.descripcion }}</td>
               <td>{{ articulo.precio.toFixed(2) }}</td>
               <td>{{ articulo.stock }}</td>
-
+              <td></td>
 
               <td>
                 <v-btn :to="{ name: 'editar', params: { id: articulo.id } }" fab small
