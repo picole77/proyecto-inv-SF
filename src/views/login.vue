@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-content class="bacgraund">
+        <v-main class="background">
             <v-container class="fill-height" fluid>
                 <v-row align="center" justify="center"> 
                     <v-col cols="12" sm="6" md="4">
@@ -19,8 +19,6 @@
                                                 </v-col>
                                                 <h4 class="text-center   font-weight-black  text-h5 teal--text text--light-blue-darken-" 
                                                 color="">login</h4>
-                                                
-                                             
                                                <!-- <h1 class="text-center mt-2 teal--text text--light-blue-darken-1 " 
                                                 color="#795548">¡Bienvenido! </h1> -->
                                                 
@@ -39,34 +37,34 @@
                                                     <h4 class="text-center mt-1 teal--text text--light-blue-darken-1">ingrese usuario y password</h4>
                                                     
                                                     <v-text-field
-                                                    label="Nombre de ususario"
-                                                    name="name"
-                                                    prepend-icon="person"
-                                                    type="text"
-                                                    v-model="user"
-                                                    color="teal accent-3"/>
-
+                                                        label="Nombre de ususario"
+                                                        name="name"
+                                                        prepend-icon="person"
+                                                        type="text"
+                                                        v-model="username"
+                                                        color="teal accent-3"
+                                                    />
                                                    <!-- <v-text-field
                                                     label="Email" 
                                                     name="email" 
                                                     prepend-icon="email"
                                                     type="text"
                                                     color="teal accent-3"/> -->
-                                                   
                                                     <v-text-field
-                                                    id="password"
-                                                    label="Password"
-                                                    name="Password"
-                                                    prepend-icon="lock"
-                                                    type="password"
-                                                    v-model="pass"
-                                                    color="teal accent-3"/>
+                                                        id="password"
+                                                        label="Password"
+                                                        name="Password"
+                                                        prepend-icon="lock"
+                                                        type="password"
+                                                        v-model="password"
+                                                        color="teal accent-3"
+                                                    />
+                                                    <div class="text-center my-1">
+                                                        <v-btn class="font-weight-black my-3" elevation="1" type="submit" rounded color="lime accent-4">Iniciar Sesión</v-btn>
+                                                    </div>
                                                 </v-form>
                                             </v-card-text>
 
-                                            <div class="text-center my-1">
-                                                <v-btn class="font-weight-black my-3" elevation="1" type="submit" rounded color="lime accent-4">Iniciar Sesión</v-btn>
-                                            </div>
                                         </v-col>
                                         
                                         <v-col cols="12" md="12" class="teal primary">
@@ -92,7 +90,7 @@
                                                     name="name"
                                                     prepend-icon="person"
                                                     type="text"
-                                                    v-model="user"
+                                                    v-model="new_username"
                                                     color="teal accent-3"/>
                                                     <!-- <v-text-field
                                                     label="Email"
@@ -101,17 +99,18 @@
                                                     type="text"
                                                     color="teal accent-3"/> -->
                                                     <v-text-field
-                                                    label="Crear Password"
-                                                    name="Password"
-                                                    prepend-icon="lock"
-                                                    type="password"
-                                                    v-model="pass"
-                                                    color="teal accent-3"/>
+                                                        label="Crear Password"
+                                                        name="Password"
+                                                        prepend-icon="lock"
+                                                        type="password"
+                                                        v-model="new_password"
+                                                        color="teal accent-3"
+                                                    />
+                                                    <div class="text-center mt-1"> 
+                                                        <v-btn class="font-weight-black my-3" elevation="1" rounded color="lime accent-4">Crear Cuenta</v-btn>
+                                                    </div>
                                                 </v-form>
                                             </v-card-text>
-                                            <div class="text-center mt-1"> 
-                                                <v-btn class="font-weight-black my-3" elevation="1" rounded color="lime accent-4">Crear Cuenta</v-btn>
-                                            </div>
                                         </v-col>
                                     </v-row>
                                 </v-window-item>
@@ -121,39 +120,47 @@
                 </v-row>
 
             </v-container>
-        </v-content> 
+        </v-main> 
     </v-app>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-        data: ()=>({
-        step: 1,
-            user: "",
-            pass: ""
-        }),
-        props: {
-            source: String
+    name: 'login',
+    data: function () {
+        return {
+            step: 1,
+            username: '',
+            password: '',
+            new_username: '',
+            new_password: ''
+        }
+
+    },
+    props: {
+        source: String
     },
     methods: {
-        login() {
+        login: async function() {
             let url = 'http://localhost:3000/login'
-            axios.post(url, {
-                user: this.user,
-                pass: this.pass
+            await axios.post(url, {
+                username: this.username,
+                password: this.password
             })
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
 
         },
         
     }
     
-    }
+}
 </script>
 
 <style scoped>
