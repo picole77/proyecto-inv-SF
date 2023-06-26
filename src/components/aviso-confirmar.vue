@@ -38,3 +38,8 @@
       </div>
     </v-sheet>
   </template>
+<script setup>
+export default {
+  
+}
+</script>

@@ -27,7 +27,7 @@ const routes = [
   {
     path: '/src/views/arti_cocina/listar.vue',
     name: 'listar',
-    component: () => import('@/views/articulos/listar.vue'),
+    component: () => import('@/views/arti_cocina/listar.vue'),
   },
   
     // editar

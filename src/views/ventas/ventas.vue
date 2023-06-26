@@ -1,103 +1,197 @@
 <template>
-  <div>
-    <v-container id="listar" fluid tag="section">
-      <v-btn to="/articulos/crear" fab darck color="#00c853"><v-icon>mdi-plus</v-icon></v-btn>
+  <v-card>
+    <div>
+     <h1>Venta</h1>
+    </div>
+    
+    <v-card-title>
+      <v-layout align-start justify-start row>
+      <v-sheet :class="model" max-width="200" 
+        class="mx-auto mt-2"
+        elevation="10"
+        height="50"
+        width="20%">
+        <v-text-field v-model="search" append-icon="search" label="ID Venta" single-line hide-details></v-text-field>
+      </v-sheet>
 
-      <base-material-card icon="mdi-clipboard-text" title="Simple Table" class="px-5 py-3">
-        <v-simple-table>
-          <thead>
-            <tr>
-              <th class="primary--text">
-                ID
-              </th>
-              <th class="primary--text">
-                Descripcion
-              </th>
-              <th class="primary--text">
-                Precio
-              </th>
-              <th class="primary--text">
-                Cantidad
-              </th>
-              <th class="text-right primary--text">
-                Vendedor
-              </th>
-              <th class="text-right primary--text">
-                  Venta
-                </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr v-for="articulo in articulos" :key="articulo.id">
-              <td>{{ articulo.id }}</td>
-              <td>{{ articulo.descripcion }}</td>
-              <td>{{ articulo.precio.toFixed(2) }}</td>
-              <td>{{ articulo.stock }}</td>
-              <td></td>
-
-              <td>
-                <v-btn :to="{ name: 'editar', params: { id: articulo.id } }" fab small
-                  color="light-blue"><v-icon>mdi-pencil</v-icon></v-btn>
-                <v-btn @click.stop="dialog = true" @click=" id = articulo.id" fab small
-                  color="orange darken-4"><v-icon>mdi-delete</v-icon></v-btn>
-              </td>
-
-
-            </tr>
-          </tbody>
-        </v-simple-table>
-      </base-material-card>
-
-      <v-dialog v-model="dialog" max-whidth="350">
-        <v-card>
-          <v-card-title class="headline">¿Desea eliminar el registro?</v-card-title>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <V-btn @click="dialog = false">Cancelar</V-btn>
-            <V-btn @click="confirmarBorrado(id)" color="error">Aceptar</V-btn>
-          </v-card-actions>
-        </v-card>
-
-      </v-dialog>
-
-    </v-container>
-  </div>
+       <v-sheet :class="model" max-width="200" 
+          class="mx-auto mt-1"
+          elevation="10"
+          height="50"
+          width="20%">
+         <v-card dark color="white">
+              <v-card-text class="px-0">descripcion</v-card-text>
+            </v-card>
+        </v-sheet>
+         <v-sheet :class="model" max-width="200" 
+            class="mx-auto mt-1"
+            elevation="10"
+            height="50"
+            width="20%">
+           <v-card dark color="white">
+                <v-card-text class="px-0">3</v-card-text>
+              </v-card>
+          </v-sheet>
+       <v-sheet :class="model" max-width="200" 
+        class="mx-auto mt-1"
+        elevation="10"
+        height="50"
+        width="20%">
+        <v-text-field v-model="search" append-icon="search" label="ID Venta" single-line hide-details></v-text-field>
+      </v-sheet> 
+      
+       <v-sheet :class="model" max-width="200" 
+            class="mx-auto mt-1"
+            elevation="10"
+            height="50"
+            width="20%">
+           <v-card dark color="white">
+                <v-card-text class="px-1">3</v-card-text>
+              </v-card>
+          </v-sheet>
+           <v-sheet :class="model" max-width="200" 
+            class="mx-auto mt-1"
+            elevation="10"
+            height="50"
+            width="20%"
+            >
+           <v-card dark color="white">
+                <v-card-text class="px-0">3</v-card-text>
+              </v-card>
+          </v-sheet>
+      <v-spacer></v-spacer>  
+    </v-layout>
+    </v-card-title>
+   
+    
+    <v-data-table :headers="headers" :items="desserts" :search="search">
+      <template v-slot:items="props">
+        <td>{{ props.item.name }}</td>
+        <td class="text-xs-right">{{ props.item.calories }}</td>
+        <td class="text-xs-right">{{ props.item.fat }}</td>
+        <td class="text-xs-right">{{ props.item.carbs }}</td>
+        <td class="text-xs-right">{{ props.item.protein }}</td>
+        <td class="text-xs-right">{{ props.item.iron }}</td>
+      </template>
+      <template v-slot:no-results>
+        <v-alert :value="true" color="error" icon="warning">
+          Your search for "{{ search }}" found no results.
+        </v-alert>
+      </template>
+    </v-data-table>
+    <v-spacer></v-spacer>
+    <div class="d-flex justify-space-around mb-6 bg-surface-variant mx-auto " >
+      <v-btn color="success" class="mt-2 font-weight-black">Guardar</v-btn>
+      
+      <v-btn color="error" class="mt-2 font-weight-black">Cancelar</v-btn>
+     
+      <v-btn color="info" class="mt-2 font-weight-black">Imprimir</v-btn>
+    </div>
+  </v-card>
+   
+    
 </template>
 
 <script>
-let url = 'http://localhost:3000/api/articulos?page=1&limit=25';
-import axios from 'axios';
 export default {
-  name: 'listar',
-  mounted() {
-    this.obtenerArticulos();
-  },
   data() {
     return {
-      dialog: false,
-      articulos: null
-    }
-  },
-  methods: {
-    obtenerArticulos() {
-      axios.get(url)
-        .then(response => {
-          this.articulos = response.data.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    },
-    confirmarBorrado(id) {
-      axios.delete(url + id)
-        .then(() => {
-          this.obtenerArticulos();
-          this.dialog = false;
-        })
-        .catch((error) => {
-          console.log(error);
-        })
+      search: '',
+      headers: [
+        {
+          text: 'Dessert (100g serving)',
+          align: 'left',
+          sortable: false,
+          value: 'name'
+        },
+        { text: 'Calories', value: 'calories' },
+        { text: 'Fat (g)', value: 'fat' },
+        { text: 'Carbs (g)', value: 'carbs' },
+        { text: 'Protein (g)', value: 'protein' },
+        { text: 'Iron (%)', value: 'iron' }
+      ],
+      desserts: [
+        {
+          name: 'Frozen Yogurt',
+          calories: 159,
+          fat: 6.0,
+          carbs: 24,
+          protein: 4.0,
+          iron: '1%'
+        },
+        {
+          name: 'Ice cream sandwich',
+          calories: 237,
+          fat: 9.0,
+          carbs: 37,
+          protein: 4.3,
+          iron: '1%'
+        },
+        {
+          name: 'Eclair',
+          calories: 262,
+          fat: 16.0,
+          carbs: 23,
+          protein: 6.0,
+          iron: '7%'
+        },
+        {
+          name: 'Cupcake',
+          calories: 305,
+          fat: 3.7,
+          carbs: 67,
+          protein: 4.3,
+          iron: '8%'
+        },
+        {
+          name: 'Gingerbread',
+          calories: 356,
+          fat: 16.0,
+          carbs: 49,
+          protein: 3.9,
+          iron: '16%'
+        },
+        {
+          name: 'Jelly bean',
+          calories: 375,
+          fat: 0.0,
+          carbs: 94,
+          protein: 0.0,
+          iron: '0%'
+        },
+        {
+          name: 'Lollipop',
+          calories: 392,
+          fat: 0.2,
+          carbs: 98,
+          protein: 0,
+          iron: '2%'
+        },
+        {
+          name: 'Honeycomb',
+          calories: 408,
+          fat: 3.2,
+          carbs: 87,
+          protein: 6.5,
+          iron: '45%'
+        },
+        {
+          name: 'Donut',
+          calories: 452,
+          fat: 25.0,
+          carbs: 51,
+          protein: 4.9,
+          iron: '22%'
+        },
+        {
+          name: 'KitKat',
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7,
+          iron: '6%'
+        }
+      ]
     }
   }
 }

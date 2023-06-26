@@ -1,9 +1,5 @@
 <template>
 <div>
-  <v-card class="pa-4" flat height="20px">
-      
-    </v-card>
-  
   <v-container id="listar" fluid tag="section">
           <v-card
             color="red-lighten-4"
@@ -31,7 +27,7 @@
     
       <base-material-card icon="mdi-clipboard-text" height="80px"
       title="Simple Table" 
-      class="px-5 py-5">
+      class="px-5 py-3">
       <h5 >agregar articulo</h5>
       <v-simple-table >
         <thead height="80px">
