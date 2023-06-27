@@ -30,7 +30,7 @@
 
     
 
-    <router-link to="/src/views/articulos/listar.vue">
+    <router-link to="/listar-articulos">
       <v-btn target ="_blank" text >
         <span class="font-weight-black">Inventario General</span>
       </v-btn>
@@ -38,7 +38,7 @@
     
     
     
-    <router-link to="/src/views/arti_cocina/listar.vue">
+    <router-link to="/listar-articulos-cocina">
       <v-btn target ="_blank" text >
         <span class="font-weight-black">Inventario Cocina</span>
       </v-btn>
@@ -56,7 +56,7 @@
       </v-btn>
     </router-link>
     
-    <router-link to="/src/views/dash.vue">
+    <router-link to="/dashboard">
       <v-btn  target="_blank" text>
         <span class="font-weight-black">Inicio</span>
       </v-btn>

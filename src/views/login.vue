@@ -165,17 +165,20 @@ export default {
     methods: {
         login: async function() {
             let url = 'http://localhost:3000/login'
+            const optionThis = this
             await axios.post(url, {
                 username: this.username,
                 password: this.password
             })
             .then(function (response) {
-                console.log(response);
+                const session = JSON.stringify(response.data.session)
+                localStorage.setItem("session", session)
+                optionThis.$router.push("/listar-articulos")
             })
             .catch(function (error) {
                 console.log(error);
             });
-
+            
         },
         register: async function() {
             let url = 'http://localhost:3000/register'
