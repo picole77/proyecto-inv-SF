@@ -3,34 +3,43 @@
     <div>
      <h1>Venta</h1>
     </div>
-    <div>
-      <template>
-    <v-card>
-      <v-container fluid>
-        <v-row>
-          <v-col cols="12">
-            <v-combobox
-              v-model="value"
-              :items="items"
-              label="Default"
-            ></v-combobox>
-          </v-col>
-          <v-col cols="12">
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-card>
-  </template>
+    <div class="d-flex justify-end">
+      <v-label class="text-h3 mr-10">0.00</v-label>
     </div>
-    
+    <v-divider color="info"></v-divider>
+    <div class="d-flex mx-2 justify-center">
+      <div>
+        <v-label>Código de barras</v-label>
+        <v-text-field variant="outlined"></v-text-field>
+      </div>
+      <div>
+        <v-label>Descripción</v-label>
+        <v-text-field variant="outlined"></v-text-field>
+      </div>
+      <div>
+        <v-label>Precio</v-label>
+        <v-text-field variant="outlined"></v-text-field>
+      </div>
+      <div>
+        <v-label>Cantidad</v-label>
+        <v-text-field variant="outlined"></v-text-field>
+      </div>
+      <div>
+        <v-label>SubTotal</v-label>
+        <v-text-field variant="outlined"></v-text-field>
+      </div>
+    </div>
     <v-table>
       <thead>
         <tr>
           <th class="text-left">
-            Name
+            Código de Barras
           </th>
           <th class="text-left">
-            Calories
+            Producto
+          </th>
+          <th class="text-center">
+            Descripción
           </th>
         </tr>
       </thead>
@@ -41,51 +50,10 @@
         >
           <td>{{ item.name }}</td>
           <td>{{ item.calories }}</td>
+          <td>{{ item.calories }}</td>
         </tr>
       </tbody>
     </v-table>
-      <v-table>
-        <thead>
-          <tr>
-            <th class="text-left">
-              Name
-            </th>
-            <th class="text-left">
-              Calories
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="item in desserts"
-            :key="item.name"
-          >
-            <td>{{ item.name }}</td>
-            <td>{{ item.calories }}</td>
-          </tr>
-        </tbody>
-      </v-table>
-      <v-table>
-        <thead>
-          <tr>
-            <th class="text-left">
-              Name
-            </th>
-            <th class="text-left">
-              Calories
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="item in desserts"
-            :key="item.name"
-          >
-            <td>{{ item.name }}</td>
-            <td>{{ item.calories }}</td>
-          </tr>
-        </tbody>
-      </v-table>
     <v-spacer></v-spacer>
     <div class="d-flex justify-space-around mb-6 bg-surface-variant mx-auto " >
       <v-btn color="success" class="mt-2 font-weight-black">Guardar</v-btn>
