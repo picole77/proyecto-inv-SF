@@ -47,7 +47,9 @@
       ></v-data-table>
     </v-card>
 
-
+    <div class="wrapper">
+      <ejs-calendar></ejs-calendar>
+    </div>
     </v-container>
   </template>
   
