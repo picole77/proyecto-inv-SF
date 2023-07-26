@@ -29,19 +29,28 @@
         <v-text-field variant="outlined"></v-text-field>
       </div>
     </div>
-
-
     <v-container>
-    <v-table>
-        <tr
-          v-for="item in desserts"
-          :key="item.name"
-        >
-          <td>{{ item.name }}</td>
-          <td>{{ item.calories }}</td>
-          <td>{{ item.calories }}</td>
-        </tr>
-    </v-table>
+      <v-table>
+        <thead>
+          <tr>
+            <th>#ID</th>
+            <th>Descripcion</th>
+            <th>Precio</th>
+            <th>Stock</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="item in products"
+            :key="item.id"
+          >
+              <td>{{ item.id }}</td>
+              <td>{{ item.descripcion}}</td>
+              <td>{{ item.precio.toFixed(2)}}</td>
+              <td>{{ item.stock }}</td>
+          </tr>
+        </tbody>
+      </v-table>
     </v-container>
     <v-spacer></v-spacer>
     <div class="d-flex justify-space-around mb-6 bg-surface-variant mx-auto " >
@@ -53,53 +62,55 @@
 </template>
 
 <script>
+//url de los articulos
+const url = "http://localhost:3000/api/articulos"
+//uso de axios, libreria que permite hacer peticiones a una API, HTTP
+import axios from 'axios'
+
 export default {
+  name: 'ventas',
+  //siempre declarar un data
   data() {
     return {
-      desserts: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-        },
-      ],
+      products: [],
     }
   },
+  //para generar o crear métodos
+  methods: {
+    //metodo para obtener los productos
+    loadProducts() {
+      // then y catch son propiedades de una PROMESA
+      axios.get(url)
+      // en caso de que la respuesta sea correcta
+      .then(response => {
+        //primer data respuesta de axios
+        //segundo data es respuesta de la api
+        this.products = response.data.data;
+        console.log(this.products)
+        
+      })
+      // en caso de que ocurra un error al hacer la petición
+      .catch((error) => {
+        console.log(error);
+      })
+    },
+    //metodo para hacer la búsqueda del producto por su código
+    loadProductByBarCode(search) {
+      //realizar peticion de axios para buscar el producto
+      // revisar la api de NODEJS donde esté la busqueda por producto
+      // linea 12 y 13
+      // <v-label>Código de barras</v-label>
+      //  <v-text-field variant="outlined"></v-text-field>
+      // si esto en HTML no permite ingresar texto para busqueda cambiarlo por un input normal
+      // este código pegarlo en la línea indicada
+      //usar las propiedades de onchange de vuejs para buscar
+    }
+  },
+  //para ejecutar tus métodos
+  //montar tus métodos o funciones
+  mounted() {
+    this.loadProducts()
+  }
 }
 import recibo from './recibo.vue';
 </script>

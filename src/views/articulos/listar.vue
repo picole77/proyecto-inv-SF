@@ -24,7 +24,9 @@
   <v-btn to="/articulos/crear" fab darck color="#00c853">
     <v-icon >mdi-plus</v-icon>
   </v-btn>
-    
+    <v-btn to="/articulos/crear" fab darck color="#00c853">
+    <v-icon >mdi-plus</v-icon>
+  </v-btn>
       <base-material-card icon="mdi-clipboard-text" height="80px"
       title="Simple Table" 
       class="px-5 py-3">

@@ -12,15 +12,6 @@ const routes = [
       requiresAuth: false
     },
     component: HomeView
-  },
-
-  {
-    path: '/seguridad',
-    name: 'seguridad',
-    meta: {
-      requiresAuth: true
-    },
-    component: () => import('@/views/seguridad.vue'),
   },  
   {
     path: '/dashboard',
@@ -39,7 +30,7 @@ const routes = [
     meta: {
       requiresAuth: true
     },
-    component: () => import('@/views/arti_cocina/listar.vue'),
+    component: () => import('@/views/articulos/listar.vue'),
   },
   
     // editar
@@ -92,19 +83,15 @@ const routes = [
     },
     component: () => import('@/views/ventas/ventas.vue'),
   },
-// reporte
   {
-    path: '/reporte',
-    name: 'reporte',
-    meta: { 
+    path: '/calendario',
+    name: 'calendario',
+    meta: {
       requiresAuth: true
     },
-    component: function () {
-      return import('../views/reporte.vue')
-    }
+    component: () => import('../views/articulos/Calendario.vue'),
   },
-
- 
+  
 ]
 
 const router = new VueRouter({

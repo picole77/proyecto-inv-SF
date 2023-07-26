@@ -25,14 +25,14 @@
         <span   class="font-weight-black">login</span>
       </v-btn>
     </router-link>
-
-      
-
-    
-
+    <router-link to="/dashboard">
+        <v-btn  target="_blank" text>
+          <span class="font-weight-black">Inicio</span>
+        </v-btn>
+      </router-link>
     <router-link to="/listar-articulos">
       <v-btn target ="_blank" text >
-        <span class="font-weight-black">Inventario General</span>
+        <span class="font-weight-black">Almacen</span>
       </v-btn>
     </router-link>
     
@@ -40,7 +40,7 @@
     
     <router-link to="/listar-articulos-cocina">
       <v-btn target ="_blank" text >
-        <span class="font-weight-black">Inventario Cocina</span>
+        <span class="font-weight-black">Cocina</span>
       </v-btn>
     </router-link>
     
@@ -49,18 +49,18 @@
         <span class="font-weight-black">Ventas</span>
       </v-btn>
     </router-link>
-
-    <router-link to="/reporte">
-      <v-btn target ="_blank" text >
+    <router-link to="/recibo">
+      <v-btn  target="_blank" text>
         <span class="font-weight-black">Reportes</span>
       </v-btn>
     </router-link>
+
+      <router-link to="/calendario">
+        <v-btn  target="_blank" text>
+          <span class="font-weight-black">Calendario</span>
+        </v-btn>
+      </router-link>
     
-    <router-link to="/dashboard">
-      <v-btn  target="_blank" text>
-        <span class="font-weight-black">Inicio</span>
-      </v-btn>
-    </router-link>
   </div>
     </v-app-bar>
 
@@ -71,10 +71,12 @@
 </template>
 
 <script>
-
+import {calendarComponent} from '@syncfusion/ej2-vue-calendars'
 export default {
   name: 'App',
-
+  components: {
+    'ejs-calendar': calendarComponent
+  },
 
 
   data: () => ({

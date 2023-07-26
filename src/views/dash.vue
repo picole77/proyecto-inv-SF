@@ -1,7 +1,8 @@
 
 <template>
+<div>
   <barranavegacion/>
-
+</div>
 
 </template>
 
