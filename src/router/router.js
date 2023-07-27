@@ -99,7 +99,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-/* validate if session exist and requires auth is false
+//validate if session exist and requires auth is false
 router.beforeEach( (to, from, next) => {
   // get session from localstorage
   const session = localStorage.getItem('session')
@@ -110,6 +110,6 @@ router.beforeEach( (to, from, next) => {
     next({name: 'login'})
   else
     next()
-})*/
+})
 
 export default router

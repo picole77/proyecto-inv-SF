@@ -38,13 +38,25 @@
               ID
             </th>
             <th class="primary--text">
-              Descripcion
+              Código de Barras
             </th>
             <th class="primary--text">
-              Precio
+              Nombre
+            </th>
+            <th class="primary--text">
+              Descripción
+            </th>
+            <th class="primary--text">
+              Precio de Compra
+            </th>
+            <th class="primary--text">
+              Precio de Venta
             </th>
             <th class="primary--text">
               Stock
+            </th>
+            <th class="primary--text">
+              Imagen
             </th>
             <th class="text-right primary--text">
               Acciones
@@ -55,11 +67,13 @@
         <tbody class="font-weight-bold">
           <tr v-for="articulo in articulos" :key="articulo.id">
             <td>{{ articulo.id }}</td>
-            <td>{{ articulo.descripcion}}</td>
-            <td>{{ articulo.precio.toFixed(2)}}</td>
+            <td>{{ articulo.codigo_barras}}</td>
+            <td>{{ articulo.nombre }}</td>
+            <td>{{ articulo.descripcion }}</td>
+            <td>{{ articulo.precio_compra }}</td>
+            <td>{{ articulo.precio_venta }}</td>
             <td>{{ articulo.stock }}</td>
-
-
+            <td><img :src="articulo.imagen" :alt="articulo.nombre"></td>
             <td>
               <v-btn :to="{name:'editar', params:{id:articulo.id}}" fab small color="light-blue"><v-icon>mdi-pencil</v-icon></v-btn>
               <v-btn @click.stop="dialog=true" @click=" id=articulo.id" fab small color="orange darken-4"><v-icon>mdi-delete</v-icon></v-btn>

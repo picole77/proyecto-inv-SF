@@ -37,11 +37,11 @@
                                                     <h4 class="text-center mt-1 teal--text text--light-blue-darken-1">ingrese usuario y password</h4>
                                                     
                                                     <v-text-field
-                                                        label="Nombre de ususario"
-                                                        name="name"
+                                                        label="Nombre de usuario"
+                                                        name="nombre_usuario"
                                                         prepend-icon="person"
                                                         type="text"
-                                                        v-model="username"
+                                                        v-model="nombre_usuario"
                                                         color="teal accent-3"
                                                     />
                                                    <!-- <v-text-field
@@ -91,28 +91,28 @@
                                                 <h3 class="text-center   font-weight-black  text-h3 teal--text text--light-blue-darken-" >Crear Cuenta</h3>
                                                 
                                                 <h4 class="text-center mt-3 font-weight-black teal--text text--light-blue-darken-4">Ingresar datos para registrarse</h4>
-                                                <v-form @submit.prevent="register">
+                                                <v-form @submit.prevent="register" enctype="multipart/form-data">
                                                     <v-text-field
-                                                    label="Nombre"
-                                                    name="name"
+                                                    label="Nombre Completo"
+                                                    name="nombre_completo"
                                                     prepend-icon="person"
                                                     type="text"
-                                                    v-model="new_name"
+                                                    v-model="form.nombre_completo"
                                                     color="teal accent-3"/>
 
                                                     <v-text-field
                                                     label="Nombre de Usuario"
-                                                    name="name"
+                                                    name="nombre_usuario"
                                                     prepend-icon="person"
                                                     type="text"
-                                                    v-model="new_username"
+                                                    v-model="form.nombre_usuario"
                                                     color="teal accent-3"/>
 
                                                     <v-text-field
                                                     label="Correo Electrónico"
                                                     name="email"
                                                     prepend-icon="email"
-                                                    v-model="new_email"
+                                                    v-model="form.email"
                                                     type="email"
                                                     color="teal accent-3"/>
 
@@ -121,9 +121,36 @@
                                                         name="Password"
                                                         prepend-icon="lock"
                                                         type="password"
-                                                        v-model="new_password"
+                                                        v-model="form.password"
                                                         color="teal accent-3"
                                                     />
+
+                                                    <v-text-field
+                                                        label="Numero de Teléfono"
+                                                        name="numero_telefono"
+                                                        prepend-icon="phone"
+                                                        type="number"
+                                                        v-model="form.numero_telefonico"
+                                                        color="teal accent-3"
+                                                    />
+
+                                                    <v-text-field 
+                                                        label="Dirección"
+                                                        name="address"
+                                                        prepend-icon="directions"
+                                                        type="text"
+                                                        v-model="form.address"
+                                                        color="teal accent-3"
+                                                    />
+
+                                                    <v-file-input 
+                                                    label="Imagen de usuario"
+                                                    name="imagen"
+                                                    v-model="form.image"
+                                                    accept="image/*"
+                                                    @onchange="uploadImage($event.target.files)"
+                                                    >
+                                                    </v-file-input>
 
                                                     <div class="text-center mt-1"> 
                                                         <v-btn type="submit" class="font-weight-black my-3" elevation="1" rounded color="lime accent-4">Crear Cuenta</v-btn>
@@ -150,12 +177,18 @@ export default {
     data: function () {
         return {
             step: 1,
-            username: '',
+            nombre_usuario: '',
             password: '',
-            new_name: '',
-            new_email: '',
-            new_username: '',
-            new_password: ''
+            form: {
+                nombre_completo: '',
+                email: '',
+                nombre_usuario: '',
+                password: '',
+                numero_telefonico: '',
+                address: '',
+                image: null,
+                image_name: ''
+            }
         }
 
     },
@@ -167,7 +200,7 @@ export default {
             let url = 'http://localhost:3000/login'
             const optionThis = this
             await axios.post(url, {
-                username: this.username,
+                nombre_usuario: this.nombre_usuario,
                 password: this.password
             })
             .then(function (response) {
@@ -180,17 +213,29 @@ export default {
             });
             
         },
+        uploadImage(files) {
+            this.form.image = files[0]
+        },
         register: async function() {
             let url = 'http://localhost:3000/register'
-            await axios.post(url,{ 
-                name: this.new_name,
-                username: this.new_username,
-                email: this.new_email,
-                password: this.new_password
-            })
+            
+            let formData = new FormData();
+            this.form.image_name = this.form.image.name
+            // console.log(this.form.image_name);
+            formData.append('file', this.form.image)
+            formData.append('filename', this.form.image_name)
+            formData.append('nombre_completo', this.form.nombre_completo)
+            formData.append('nombre_usuario', this.form.nombre_usuario)
+            formData.append('email', this.form.email)
+            formData.append('password', this.form.password)
+            formData.append('numero_telefonico', this.form.numero_telefonico)
+            formData.append('address', this.form.address)
+            
+            await axios.post(url,formData)
             .then(function(response) {
-                console.log(response);
-                this.messages = response.message
+                // console.log(response);
+                if(response.data.status)
+                    this.messages = response.data.message
             })
             .catch(function (error) {
                 console.log(error);

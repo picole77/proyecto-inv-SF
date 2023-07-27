@@ -34,9 +34,13 @@
         <thead>
           <tr>
             <th>#ID</th>
-            <th>Descripcion</th>
-            <th>Precio</th>
+            <th>Codigo de Barras</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio de Compra</th>
+            <th>Precio de Venta</th>
             <th>Stock</th>
+            <th>Imagen</th>
           </tr>
         </thead>
         <tbody>
@@ -45,9 +49,13 @@
             :key="item.id"
           >
               <td>{{ item.id }}</td>
-              <td>{{ item.descripcion}}</td>
-              <td>{{ item.precio.toFixed(2)}}</td>
+              <td>{{ item.codigo_barras}}</td>
+              <td>{{ item.nombre }}</td>
+              <td>{{ item.descripcion }}</td>
+              <td>{{ item.precio_compra }}</td>
+              <td>{{ item.precio_venta }}</td>
               <td>{{ item.stock }}</td>
+              <td>{{ item.imagen }}</td>
           </tr>
         </tbody>
       </v-table>
