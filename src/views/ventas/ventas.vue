@@ -76,7 +76,7 @@ const url = "http://localhost:3000/api/articulos"
 import axios from 'axios'
 
 export default {
-  name: 'Ventas',
+  name: 'ventas',
   //siempre declarar un data
   data() {
     return {
