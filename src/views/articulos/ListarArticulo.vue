@@ -88,7 +88,7 @@
         </tbody>
       </v-simple-table>
     </base-material-card>
-
+    <!-- DELETE DIALOG -->
     <v-dialog v-model="dialog" max-width="350">
       <v-card>
         <v-card-title class="headline">¿Desea eliminar el registro?</v-card-title>
@@ -98,20 +98,25 @@
           <V-btn @click="confirmarBorrado(id)" color="error">Aceptar</V-btn>
         </v-card-actions>
       </v-card>
-
     </v-dialog>
-
+    <!-- COCINA DIALOG -->
     <v-layout row justify-center>
       <v-dialog
         v-model="cocinaDialog"
-        max-width="400"
+        max-width="600"
       >
         <v-card>
-          <v-card-title class="headline">Use Google's location service?</v-card-title>
-
-          <v-card-text>
-            Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
-          </v-card-text>
+          <v-img
+          
+          aspect-radio="2.75"
+          ></v-img>
+          <v-card-title class="headline">Agregar Articulos a Cocina</v-card-title>
+          <div>
+            <v-text-field
+              max-width="400"
+              label="Código de barras"
+            >{{ articulo }}</v-text-field>
+          </div>
 
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -120,14 +125,14 @@
               color="green darken-1"
               @click="cocinaDialog = false"
             >
-              Disagree
+              Cancelar
             </v-btn>
 
             <v-btn
               color="green darken-1"
               @click="cocinaDialog = false"
             >
-              Agree
+              Guardar
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -138,7 +143,7 @@
 </template>
 
 <script>
-let url = 'http://localhost:3000/api/articulos?page=1&limit=25';
+let url = 'http://localhost:3000/api/articulos';
 import axios from 'axios';
 export default{
   name:'listar',
@@ -149,12 +154,13 @@ export default{
     return{
       dialog: false,
       cocinaDialog: false,
-      articulos:null
+      articulos:null,
+      cocina_articulos: null
     }
   },
   methods:{
     obtenerArticulos(){
-      axios.get(url)
+      axios.get(`${url}?page=1&limit=25`)
       .then(response => {
       this.articulos = response.data.data;
       })
@@ -163,7 +169,7 @@ export default{
       })
    },
    confirmarBorrado(id){
-    axios.delete(url+id)
+    axios.delete(`${url}/${id}`)
     .then(()=>{
       this.obtenerArticulos();
       this.dialog = false;
