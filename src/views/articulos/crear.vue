@@ -34,7 +34,7 @@
                     >
                     </v-text-field>
                     <v-card-actions>
-                        <v-btn  to="/src/views/articulos/listar.vue" color="#FF5722" class="mr-4">cancelar</v-btn>
+                        <v-btn  to="/listar-articulos" color="#FF5722" class="mr-4">cancelar</v-btn>
                         <v-btn type="submit" color="#00C853" class="mr-4">guardar</v-btn>
                     </v-card-actions>
                 </form>

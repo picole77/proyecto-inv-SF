@@ -18,21 +18,7 @@
                                                         height="150"/>
                                                 </v-col>
                                                 <h4 class="text-center   font-weight-black  text-h5 teal--text text--light-blue-darken-" 
-                                                color="">login</h4>
-                                               <!-- <h1 class="text-center mt-2 teal--text text--light-blue-darken-1 " 
-                                                color="#795548">¡Bienvenido! </h1> -->
-                                                
-                                                  <!--<div class="text-center" mt-4>
-                                                    <v-btn class="mx-2" fab color="black" outlined>
-                                                        <v-icon>fab fa-facebook-f</v-icon>
-                                                    </v-btn>
-                                                    <v-btn class="mx-2" fab color="black" outlined>
-                                                        <v-icon>fab fa-google-plus-g</v-icon>
-                                                    </v-btn>
-                                                    <v-btn class="mx-2" fab color="black" outlined>
-                                                        <v-icon>fab fa-linkedin-in</v-icon>
-                                                    </v-btn>
-                                                </div> -->
+                                                color="">Login</h4>
                                                 <v-form @submit.prevent="login"> 
                                                     <h4 class="text-center mt-1 teal--text text--light-blue-darken-1">ingrese usuario y password</h4>
                                                     
@@ -68,7 +54,7 @@
                                         </v-col>
                                         
                                         <v-col cols="12" md="12" class="teal primary">
-                                                <h1 class="text-center mt-1 white--text text--light-blue-darken-4">crear cuenta</h1>
+                                                <h1 class="text-center mt-1 white--text text--light-blue-darken-4">Crear Cuenta</h1>
                                             <div class="text-center mt-1">
 
                                                 <v-btn class="font-weight-black my-3" elevation="1" rounded color="lime accent-4"   @click="step++">Registrate</v-btn>
@@ -173,7 +159,7 @@
 import axios from 'axios';
 
 export default {
-    name: 'login',
+    name: 'Login',
     data: function () {
         return {
             step: 1,
@@ -204,9 +190,14 @@ export default {
                 password: this.password
             })
             .then(function (response) {
+                // get a session response
                 const session = JSON.stringify(response.data.session)
+                // save into local storage
                 localStorage.setItem("session", session)
-                optionThis.$router.push("/listar-articulos")
+                // insert event login to event bus
+                optionThis.$bus.$emit('logged', 'User logged')
+                // redirect to list articulos
+                optionThis.$router.push("/dashboard")
             })
             .catch(function (error) {
                 console.log(error);
@@ -248,7 +239,7 @@ export default {
 
 <style scoped>
 main {
-background-image: url('@/assets/comida.jpeg');
-background-size:cover;
+    background-image: url('@/assets/comida.jpeg');
+    background-size:cover;
 }
 </style>
