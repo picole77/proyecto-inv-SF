@@ -120,5 +120,5 @@ export default {
     this.loadProducts()
   }
 }
-import recibo from './recibo.vue';
+import recibo from './Recibo.vue';
 </script>

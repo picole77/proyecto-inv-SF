@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '@/views/login.vue'
-import HomeComponent from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'login',
     meta: {
       requiresAuth: false
@@ -15,7 +14,7 @@ const routes = [
     component: Login
   },
   {
-    path: '/dashboard',
+    path: '/',
     name: 'dashboard',
     meta: {
       requiresAuth: true
@@ -24,30 +23,21 @@ const routes = [
   },
   //lista articulos
   {
-    path: '/listar-articulos',
+    path: '/articulos/listar',
     name: 'listar_articulos',
     meta: {
       requiresAuth: true
     },
-    component: () => import('@/views/articulos/listar.vue'),
-  },
-  //lista articulos cocina
-  {
-    path: '/listar-articulos-cocina',
-    name: 'listar_articulos_cocina',
-    meta: {
-      requiresAuth: true
-    },
-    component: () => import('@/views/articulos/listar.vue'),
+    component: () => import('@/views/articulos/ListarArticulo.vue'),
   },
   // editar articulos
   {
-    path: '/editar-articulo',
+    path: '/articulos/editar',
     name: 'editar_articulo',
     meta: {
       requiresAuth: true
     },
-    component: () => import('@/views/articulos/editar.vue'),
+    component: () => import('@/views/articulos/EditarArticulo.vue'),
   },
   {
     
@@ -56,16 +46,34 @@ const routes = [
     meta: {
       requiresAuth: true
     },
-    component: () => import('@/views/articulos/crear.vue'),
+    component: () => import('@/views/articulos/CrearArticulo.vue'),
+  },
+  //lista articulos cocina
+  {
+    path: '/articulos-cocina/listar',
+    name: 'listar_articulos_cocina',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/articulos_cocina/ListarArticulosCocina.vue'),
+  },
+  // crear
+  {
+    path: '/articulos-cocina/crear',
+    name: 'crear_articulo_cocina',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/articulos_cocina/CrearArticuloCocina.vue')
   },
     // editar
   {
-    path: '/articulos/editar/:id',
+    path: '/articulos-cocina/editar',
     name: 'editar_articulo_cocina',
     meta: {
       requiresAuth: true
     },
-    component: () => import('@/views/articulos/editar.vue'),
+    component: () => import('@/views/articulos_cocina/EditarArticuloCocina.vue'),
   },
   //ventas
   {
@@ -74,7 +82,15 @@ const routes = [
     meta: {
       requiresAuth: true
     },
-    component: () => import('@/views/ventas/ventas.vue'),
+    component: () => import('@/views/ventas/Ventas.vue'),
+  },
+  {
+    path: '/reportes',
+    name: 'reportes',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/ventas/Recibo.vue')
   },
   {
     path: '/calendario',
@@ -82,10 +98,8 @@ const routes = [
     meta: {
       requiresAuth: true
     },
-    component: () => import('../views/articulos/Calendario.vue'),
-  }
- 
-  
+    component: () => import('@/views/articulos/CalendarioArticulos.vue'),
+  },
 ]
 
 const router = new VueRouter({

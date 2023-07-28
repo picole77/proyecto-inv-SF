@@ -1,9 +1,8 @@
 <template>
-   
     <v-container>
         <v-row>
             <v-col class="mb-4">
-                <h1 class="display-2 font-weight-bold mb-3">Registrar nuevo articulo</h1>
+                <h1 class="display-2 font-weight-bold mb-3">Editar articulo</h1>
             </v-col>
         </v-row>
 
@@ -34,44 +33,52 @@
                     >
                     </v-text-field>
                     <v-card-actions>
-                        <v-btn  to="/listar-articulos" color="#FF5722" class="mr-4">cancelar</v-btn>
-                        <v-btn type="submit" color="#00C853" class="mr-4">guardar</v-btn>
+                        <v-btn  to="/articulos/listar" color="#FF5722" class="mr-4">Cancelar</v-btn>
+                        <v-btn to="/articulos/listar" type="submit" color="#00C853" class="mr-4">Guardar</v-btn>
                     </v-card-actions>
                 </form>
             </v-col>
         </v-row>
-       
     </v-container>
- 
 </template>
 
 <script>
 let url = 'http://localhost:3000/api/articulos/';
 import axios from 'axios';
+
 export default{
-    name:'crear',
+    name:'editar',
+    mounted(){
+        this.id = this.$route.params.id;
+        axios.get(url+this.id)
+        .then(response=>{
+            this.articulo=response.data[0];
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+    },
     data(){
         return{
+            id:null,
             articulo:{
                 descripcion:'',
                 precio:'',
-                stock:''
+                stok:''
             }
-        };
+        }
     },
     methods:{
         guardarArticulo(){
-        let router = this.$router; 
-        console.log(router);
+        let router = this.$router;
         let params = this.articulo;
-        axios.post(url, params)
+        axios.put(url+this.id, params) 
         .then(()=>{
             router.push('/articulos');
-        }) 
-        .catch((error)=>{
-            console.log(error);
         })
-    }
-    }
-}
+        .catch((error)=>{
+            console.log(error)
+        })   
+     }
+    }}
 </script>

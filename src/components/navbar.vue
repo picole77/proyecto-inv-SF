@@ -9,29 +9,29 @@
         alt="Vuetify Logo"
         class="shrink mr-2"
         contain
-        src="../assets/cropped-logo-eric.webp"
+        src="@/assets/cropped-logo-eric.webp"
         transition="scale-transition"
         width="90"
       />
     </div>
     <v-spacer></v-spacer>
     <div>
-    <!-- <router-link to="/">
+    <!-- <router-link to="/login">
       <v-btn target ="_blank" text> 
         <span class="font-weight-black">Login</span>
       </v-btn>
     </router-link> -->
-    <router-link to="/dashboard">
+    <router-link to="/">
       <v-btn  target="_blank" text>
         <span class="font-weight-black">Inicio</span>
       </v-btn>
     </router-link>
-    <router-link to="/listar-articulos">
+    <router-link to="/articulos/listar">
       <v-btn target ="_blank" text >
         <span class="font-weight-black">Almacen</span>
       </v-btn>
     </router-link>
-    <router-link to="/listar-articulos-cocina">
+    <router-link to="/articulos-cocina/listar">
       <v-btn target ="_blank" text >
         <span class="font-weight-black">Cocina</span>
       </v-btn>
@@ -41,7 +41,7 @@
         <span class="font-weight-black">Ventas</span>
       </v-btn>
     </router-link>
-    <router-link to="/recibo">
+    <router-link to="/reportes">
       <v-btn  target="_blank" text>
         <span class="font-weight-black">Reportes</span>
       </v-btn>
@@ -51,6 +51,9 @@
         <span class="font-weight-black">Calendario</span>
       </v-btn>
     </router-link>
+    <v-btn
+    @click="logout()"
+    >Cerrar Sesión</v-btn>
     </div>
     </v-app-bar>
 </template>
@@ -59,7 +62,8 @@ export default {
     name: 'navbar',
     data() {
         return {
-            isLogged: this.checkIfIsLogged()
+            isLogged: this.checkIfIsLogged(),
+            user: ''
         }
     },
     methods: {
@@ -67,12 +71,28 @@ export default {
             const session = localStorage.getItem('session')
 
             return session ? true : false;
+        },
+        logout() {
+            // remove session
+            localStorage.removeItem('session')
+            // redirect to login
+            this.$router.push('/login')
+        },
+        existUser() {
+            const session = localStorage.getItem('session')
+            //parse to json
+            const parse = JSON.parse(session)
+            //insert value into user
+            this.user = parse.nombre_usuario
         }
     },
     created() {
         this.$bus.$on('logged', () => {
             this.isLogged = this.checkIfIsLogged()
         })
+    },
+    mounted() {
+        this.existUser()
     }
 }
 </script>

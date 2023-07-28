@@ -197,7 +197,7 @@ export default {
                 // insert event login to event bus
                 optionThis.$bus.$emit('logged', 'User logged')
                 // redirect to list articulos
-                optionThis.$router.push("/dashboard")
+                optionThis.$router.push("/")
             })
             .catch(function (error) {
                 console.log(error);
