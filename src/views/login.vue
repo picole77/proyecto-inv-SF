@@ -54,9 +54,8 @@
                                         </v-col>
                                         
                                         <v-col cols="12" md="12" class="teal primary">
-                                                <h1 class="text-center mt-1 white--text text--light-blue-darken-4">Crear Cuenta</h1>
+                                            <h1 class="text-center mt-1 white--text text--light-blue-darken-4">Crear Cuenta</h1>
                                             <div class="text-center mt-1">
-
                                                 <v-btn class="font-weight-black my-3" elevation="1" rounded color="lime accent-4"   @click="step++">Registrate</v-btn>
                                             </div>
                                         </v-col>
@@ -143,6 +142,10 @@
                                                     </div>
                                                 </v-form>
                                             </v-card-text>
+                                            <div class="text-center mt-1">
+                                                <v-label>¿Ya tienes cuenta?</v-label>
+                                                <v-btn class="font-weight-black my-3" elevation="1" rounded color="indigo accent-4"   @click="step--">Iniciar Sesión</v-btn>
+                                            </div>
                                         </v-col>
                                     </v-row>
                                 </v-window-item>
@@ -157,6 +160,8 @@
 
 <script>
 import axios from 'axios';
+// vue simple alert
+import VueSimpleAlert from 'vue-simple-alert'
 
 export default {
     name: 'Login',
@@ -196,11 +201,26 @@ export default {
                 localStorage.setItem("session", session)
                 // insert event login to event bus
                 optionThis.$bus.$emit('logged', 'User logged')
+                // confirm login
+                VueSimpleAlert.fire({
+                    title: 'Acceso Correcto',
+                    text: 'Se ha logueado correctamente',
+                    type: 'success',
+                    timer: 1500
+                }).then( () => optionThis.$router.push("/") )
                 // redirect to list articulos
-                optionThis.$router.push("/")
+                
             })
             .catch(function (error) {
-                console.log(error);
+                // console.log(error);
+                const errorMessage = error.response.data.message
+
+                VueSimpleAlert.fire({
+                    title: 'Error',
+                    text: `${errorMessage}`,
+                    type: 'error',
+                    timer: 1500
+                })
             });
             
         },
@@ -225,11 +245,26 @@ export default {
             await axios.post(url,formData)
             .then(function(response) {
                 // console.log(response);
-                if(response.data.status)
-                    this.messages = response.data.message
+                if(response.data.status) {
+                    VueSimpleAlert.fire({
+                        title: 'Registrado',
+                        text: 'Se ha registrado correctamente',
+                        type: 'success',
+                        timer: 1500
+                    }).then( () => this.$router.push('/login'))
+                }
+                    
             })
             .catch(function (error) {
                 console.log(error);
+                const errorMessage = error.response.data.message
+                
+                VueSimpleAlert.fire({
+                    title: 'Error',
+                    text: `${errorMessage}`,
+                    type: 'error',
+                    timer: 1500
+                })
             })
         }
     }

@@ -115,7 +115,7 @@
             <v-text-field
               max-width="400"
               label="Código de barras"
-            >{{ articulo }}</v-text-field>
+            >a</v-text-field>
           </div>
 
           <v-card-actions>
@@ -145,6 +145,8 @@
 <script>
 let url = 'http://localhost:3000/api/articulos';
 import axios from 'axios';
+import VueSimpleAlert from 'vue-simple-alert'
+
 export default{
   name:'listar',
   mounted(){
@@ -154,8 +156,7 @@ export default{
     return{
       dialog: false,
       cocinaDialog: false,
-      articulos:null,
-      cocina_articulos: null
+      articulos:null
     }
   },
   methods:{
@@ -171,11 +172,29 @@ export default{
    confirmarBorrado(id){
     axios.delete(`${url}/${id}`)
     .then(()=>{
+      // display success deleted
+      VueSimpleAlert.fire({
+        title: 'Eliminado',
+        text: 'Se ha eliminado correctamente el articulo',
+        type:'success',
+        timer: 1000
+      })
+
       this.obtenerArticulos();
+      
       this.dialog = false;
+
     })
     .catch((error) => {
-        console.log(error);
+        const message = error.response.data.message
+
+        VueSimpleAlert.fire({
+          title: 'Error',
+          text: `${message}`,
+          type: 'error',
+          timer: 1000
+        })
+        
       })
    }
   }

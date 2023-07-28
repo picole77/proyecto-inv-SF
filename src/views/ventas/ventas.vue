@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <div>
-    <h1>Venta</h1>
+    <h1>Ventas</h1>
     </div>
     <div class="d-flex justify-end">
       <v-label class="text-h3 mr-10">0.00</v-label>
@@ -76,7 +76,7 @@ const url = "http://localhost:3000/api/articulos"
 import axios from 'axios'
 
 export default {
-  name: 'ventas',
+  name: 'Ventas',
   //siempre declarar un data
   data() {
     return {
@@ -120,5 +120,4 @@ export default {
     this.loadProducts()
   }
 }
-import recibo from './Recibo.vue';
 </script>
