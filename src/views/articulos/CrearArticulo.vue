@@ -9,24 +9,38 @@
 
         <v-row>
             <v-col>
-                <form  v-on:submit.prevent="guardarArticulo()">
-                    <v-text-field color="#76FF03" v-model="articulo.descripcion"
-                    label="descripción"
+                <form  @submit.prevent="guardarArticulo" enctype="multipart/form-data">
+                    <v-text-field color="#76FF03" v-model="articulo.codigo_barras"
+                    label="Código de Barras"
                     outlined
                     required
                     >
                     </v-text-field>
-
-                    <v-text-field color="#4CAF50" v-model="articulo.precio"
-                    label="precio"
+                    <v-text-field color="#76FF03" v-model="articulo.nombre"
+                    label="Nombre"
                     outlined
-                    type="number"
+                    required
+                    ></v-text-field>
+                    <v-text-field color="#76FF03" v-model="articulo.descripcion"
+                    label="Descripción"
+                    outlined
+                    required
+                    ></v-text-field>
+                    <v-text-field color="#76FF03" v-model="articulo.precio_compra"
+                    label="Precio de compra"
+                    outlined
                     prefix="$"
                     required
                     >
                     </v-text-field>
-
-                    <v-text-field color="red" v-model="articulo.stock"
+                    <v-text-field color="#76FF03" v-model="articulo.precio_venta"
+                    label="Precio de venta"
+                    outlined
+                    prefix="$"
+                    required
+                    >
+                    </v-text-field>
+                    <v-text-field color="#76FF03" v-model="articulo.stock"
                     label="stock"
                     outlined
                     type="number"
@@ -34,8 +48,8 @@
                     >
                     </v-text-field>
                     <v-card-actions>
-                        <v-btn  to="/articulos/listar" color="#FF5722" class="mr-4">cancelar</v-btn>
-                        <v-btn type="submit" color="#00C853" class="mr-4">guardar</v-btn>
+                        <v-btn  to="/articulos/listar" color="#FF5722" class="mr-4">Cancelar</v-btn>
+                        <v-btn type="submit" color="#00C853" class="mr-4">Guardar</v-btn>
                     </v-card-actions>
                 </form>
             </v-col>
@@ -48,25 +62,37 @@
 <script>
 let url = 'http://localhost:3000/api/articulos/';
 import axios from 'axios';
+import VueSimpleAlert from 'vue-simple-alert';
+
 export default{
     name:'crear',
     data(){
         return{
             articulo:{
+                codigo_barras: '',
+                nombre: '',
                 descripcion:'',
-                precio:'',
+                precio_compra:'',
+                precio_venta: '',
                 stock:''
             }
         };
     },
     methods:{
-        guardarArticulo(){
+        guardarArticulo: async function(){
         let router = this.$router; 
-        console.log(router);
+        // console.log(router);
         let params = this.articulo;
+
         axios.post(url, params)
-        .then(()=>{
-            router.push('/articulos/listar');
+        .then((response)=>{
+            if(response.data.status) {
+                    VueSimpleAlert.fire({
+                        title: 'Creado',
+                        text: response.data.message,
+                        type: 'success'
+                    }).then( () => router.push('/articulos/listar'))
+                }
         }) 
         .catch((error)=>{
             console.log(error);

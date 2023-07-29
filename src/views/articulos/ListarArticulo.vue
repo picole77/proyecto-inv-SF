@@ -8,7 +8,7 @@
       rounded="0">
       <v-toolbar class="font-weight-black my-3" elevation="1" 
       rounded color="red-lighten-4 accent-4" density="compact">
-          <v-toolbar-title>Inventario general</v-toolbar-title>
+          <v-toolbar-title>Inventario General</v-toolbar-title>
 
           <v-text-field
               class="spacing-playground pa-6"
@@ -22,12 +22,6 @@
     </v-card>
     <v-flex>
       <v-label>Crear Articulo</v-label>
-      <v-btn to="/articulos/crear" fab darck color="#00c853">
-        <v-icon >mdi-plus</v-icon>
-      </v-btn>
-    </v-flex>
-    <v-flex>
-      <v-label>Transpaso</v-label>
       <v-btn to="/articulos/crear" fab darck color="#00c853">
         <v-icon >mdi-plus</v-icon>
       </v-btn>
