@@ -1,77 +1,125 @@
 <template>
-  <v-card>
-    <div>
-    <h1>Ventas</h1>
-    </div>
-    <div class="d-flex justify-end">
-      <v-label class="text-h3 mr-10">0.00</v-label>
-    </div>
-    <v-divider color="info"></v-divider>
-    <div class="d-flex mx-2 justify-center">
+  <v-container>
+    <v-card>
       <div>
-        <v-label>Código de barras</v-label>
-        <v-text-field variant="outlined"></v-text-field>
+        <h1>Ventas</h1>
       </div>
-      <div>
-        <v-label>Descripción</v-label>
-        <v-text-field variant="outlined"></v-text-field>
+      <div class="d-flex justify-start">
+        <v-label>Nueva Venta</v-label>
+        <v-btn fab darck color="#00c853" @click.stop="ventaDialog=true"><v-icon>mdi-plus</v-icon></v-btn>
       </div>
-      <div>
-        <v-label>Precio</v-label>
-        <v-text-field variant="outlined"></v-text-field>
-      </div>
-      <div>
-        <v-label>Cantidad</v-label>
-        <v-text-field variant="outlined"></v-text-field>
-      </div>
-      <div>
-        <v-label>SubTotal</v-label>
-        <v-text-field variant="outlined"></v-text-field>
-      </div>
-    </div>
-    <v-container>
-      <v-table>
-        <thead>
-          <tr>
-            <th>#ID</th>
-            <th>Codigo de Barras</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Precio de Compra</th>
-            <th>Precio de Venta</th>
-            <th>Stock</th>
-            <th>Imagen</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="item in products"
-            :key="item.id"
-          >
-              <td>{{ item.id }}</td>
-              <td>{{ item.codigo_barras}}</td>
-              <td>{{ item.nombre }}</td>
-              <td>{{ item.descripcion }}</td>
-              <td>{{ item.precio_compra }}</td>
-              <td>{{ item.precio_venta }}</td>
-              <td>{{ item.stock }}</td>
-              <td>{{ item.imagen }}</td>
-          </tr>
-        </tbody>
-      </v-table>
-    </v-container>
-    <v-spacer></v-spacer>
-    <div class="d-flex justify-space-around mb-6 bg-surface-variant mx-auto " >
-      <v-btn color="success" class="mt-2 font-weight-black">Guardar</v-btn>
-      <v-btn color="error" class="mt-2 font-weight-black">Cancelar</v-btn>
-      <v-btn color="info" class="mt-2 font-weight-black">Imprimir</v-btn>
-    </div> 
-  </v-card>
+      <v-container>
+        <v-simple-table>
+          <thead>
+            <tr>
+              <th>#ID</th>
+              <th>SubTotal</th>
+              <th>Impuesto Generado * Venta</th>
+              <th>Descuento</th>
+              <th>Total</th>
+              <th>Usuario</th>
+              <th>Cliente</th>
+              <th>Voucher</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="venta in ventas"
+              :key="venta.id"
+            >
+                <td>{{ venta.id }}</td>
+                <td>{{ venta.subtotal}}</td>
+                <td>{{ venta.impuesto_generado_venta }}</td>
+                <td>{{ venta.descuento }}</td>
+                <td>{{ venta.total }}</td>
+                <td>{{ venta.nombre_usuario }}</td>
+                <td>{{ venta.cliente }}</td>
+                <td>{{ venta.voucher_id }}</td>
+                <td>{{ venta.fecha }}</td>
+            </tr>
+          </tbody>
+        </v-simple-table>
+      </v-container>
+      <v-spacer></v-spacer>
+      <div class="d-flex justify-space-around mb-6 bg-surface-variant mx-auto " >
+        <v-btn color="success" class="mt-2 font-weight-black">Guardar</v-btn>
+        <v-btn color="error" class="mt-2 font-weight-black">Cancelar</v-btn>
+        <v-btn color="info" class="mt-2 font-weight-black">Imprimir</v-btn>
+      </div> 
+    </v-card>
+  
+    <!-- COCINA DIALOG -->
+    <v-layout row justify-center>
+        <v-dialog
+          v-model="ventaDialog"
+          max-width="600"
+        >
+          <v-card>
+            <v-img
+            
+            aspect-radio="2.75"
+            ></v-img>
+            <v-card-title class="headline">Agregar Articulos a Cocina</v-card-title>
+            <div class="d-flex justify-end">
+              <v-label class="text-h3 mr-10">0.00</v-label>
+            </div>
+            <div class="ml-4">
+              <v-label>Código de barras</v-label>
+              <v-text-field list="results" variant="outlined" v-on:input="loadProductByBarCode"></v-text-field>
+              <div>
+                <v-list class="d-flex">
+                  <v-list-tile v-for="product in products" :key="product.id" @click="selectProduct(product)">
+                    <v-list-tile-title>{{ product.nombre }}</v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </div>
+            </div>
+            <v-divider color="info"></v-divider>
+            <div class="d-flex mx-2 justify-center">
+              <div>
+                <v-label>Nombre</v-label>
+                <v-text-field v-model="nombre" variant="outlined"></v-text-field>
+              </div>
+              <div>
+                <v-label>Precio</v-label>
+                <v-text-field v-model="precio" variant="outlined"></v-text-field>
+              </div>
+              <div>
+                <v-label>Cantidad</v-label>
+                <v-text-field v-model="cantidad" variant="outlined"></v-text-field>
+              </div>
+              <div>
+                <v-label>SubTotal</v-label>
+                <v-text-field v-model="subtotal" variant="outlined"></v-text-field>
+              </div>
+            </div>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+  
+              <v-btn
+                color="red darken-1"
+                @click="ventaDialog = false"
+              >
+                Cancelar
+              </v-btn>
+  
+              <v-btn
+                color="green darken-1"
+                @click="saveSale({nombre, precio, cantidad, subtotal})"
+              >
+                Guardar
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
 //url de los articulos
-const url = "http://localhost:3000/api/articulos"
+const url = "http://localhost:3000/api"
 //uso de axios, libreria que permite hacer peticiones a una API, HTTP
 import axios from 'axios'
 
@@ -80,7 +128,14 @@ export default {
   //siempre declarar un data
   data() {
     return {
+      ventaDialog:false,
+      ventaModal: false,
+      ventas: [],
       products: [],
+      nombre: '',
+      precio: null,
+      cantidad: null,
+      subtotal: null
     }
   },
   //para generar o crear métodos
@@ -88,13 +143,13 @@ export default {
     //metodo para obtener los productos
     loadProducts() {
       // then y catch son propiedades de una PROMESA
-      axios.get(url)
+      axios.get(url+ "/ventas")
       // en caso de que la respuesta sea correcta
       .then(response => {
         //primer data respuesta de axios
         //segundo data es respuesta de la api
-        this.products = response.data.data;
-        console.log(this.products)
+        this.ventas = response.data.data;
+        console.log(this.ventas)
         
       })
       // en caso de que ocurra un error al hacer la petición
@@ -104,14 +159,23 @@ export default {
     },
     //metodo para hacer la búsqueda del producto por su código
     loadProductByBarCode(search) {
-      //realizar peticion de axios para buscar el producto
-      // revisar la api de NODEJS donde esté la busqueda por producto
-      // linea 12 y 13
-      // <v-label>Código de barras</v-label>
-      //  <v-text-field variant="outlined"></v-text-field>
-      // si esto en HTML no permite ingresar texto para busqueda cambiarlo por un input normal
-      // este código pegarlo en la línea indicada
-      //usar las propiedades de onchange de vuejs para buscar
+      axios.get(url + `/articulos?page=1&limit=10&search=${search}`)
+      .then(response => {
+        console.log(response);
+        this.products = response.data.data
+      })
+      .catch(response => {
+        console.log(response);
+      })
+    },
+    selectProduct(product) {
+      this.nombre = product.nombre
+      this.precio = product.precio_venta
+      this.cantidad = product.stock
+      this.subtotal = parseFloat(product.precio_venta) * parseInt(product.stock)
+    },
+    saveSale(product) {
+      console.log(`Save sale ${product.nombre}`);
     }
   },
   //para ejecutar tus métodos

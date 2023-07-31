@@ -27,9 +27,6 @@
       </v-btn>
     </v-flex>
   
-    <base-material-card icon="mdi-clipboard-text" height="80px"
-      title="Simple Table" 
-      class="px-5 py-3">
       <v-simple-table >
         <thead height="80px">
           <tr class="text-subtitle-8">
@@ -76,12 +73,11 @@
             <td>
               <v-btn :to="{name:'editar_articulo', params:{id:articulo.id}}" fab small color="light-blue"><v-icon>mdi-pencil</v-icon></v-btn>
               <v-btn @click.stop="dialog=true" @click="id=articulo.id" fab small color="orange darken-4"><v-icon>mdi-delete</v-icon></v-btn>
-              <v-btn color="primary" dark @click.stop="cocinaDialog=true" fab small> <v-icon>mdi-basket</v-icon></v-btn>
+              <v-btn color="primary" dark @click.stop="cocinaDialog=true" @click="sendToCocina(articulo)" fab small> <v-icon>mdi-basket</v-icon></v-btn>
             </td>
           </tr>
         </tbody>
       </v-simple-table>
-    </base-material-card>
     <!-- DELETE DIALOG -->
     <v-dialog v-model="dialog" max-width="350">
       <v-card>
@@ -107,9 +103,42 @@
           <v-card-title class="headline">Agregar Articulos a Cocina</v-card-title>
           <div>
             <v-text-field
-              max-width="400"
+              class="w-50 mx-4"
+              v-model="cocina_codigo_barras"
               label="Código de barras"
-            >a</v-text-field>
+              outlined
+            ></v-text-field>
+            <v-text-field
+              class="w-50 mx-4"
+              v-model="cocina_nombre"
+              label="Nombre del articulo"
+              outlined
+            ></v-text-field>
+            <v-text-field
+              class="w-50 mx-4"
+              v-model="cocina_descripcion"
+              label="Descripción del articulo"
+              outlined
+            ></v-text-field>
+            <v-text-field
+              class="w-50 mx-4"
+              v-model="cocina_precio_compra"
+              label="Precio de compra"
+              outlined
+            ></v-text-field>
+            <v-text-field
+              class="w-50 mx-4"
+              v-model="cocina_precio_venta"
+              label="Precio de venta"
+              outlined
+            ></v-text-field>
+            <v-text-field
+              class="w-50 mx-4"
+              v-model="cocina_stock"
+              type="number"
+              label="Stock"
+              outlined
+            ></v-text-field>
           </div>
 
           <v-card-actions>
@@ -150,7 +179,13 @@ export default{
     return{
       dialog: false,
       cocinaDialog: false,
-      articulos:null
+      articulos:null,
+      cocina_codigo_barras: '',
+      cocina_nombre: '',
+      cocina_descripcion: '',
+      cocina_precio_compra: null,
+      cocina_precio_venta: null,
+      cocina_stock : null
     }
   },
   methods:{
@@ -186,10 +221,19 @@ export default{
           title: 'Error',
           text: `${message}`,
           type: 'error',
-          timer: 1000
+          
         })
         
       })
+   },
+   sendToCocina(articulo) {
+    console.log(articulo);
+    this.cocina_codigo_barras = articulo.codigo_barras
+    this.cocina_nombre = articulo.nombre
+    this.cocina_descripcion = articulo.descripcion
+    this.cocina_precio_compra = articulo.precio_compra
+    this.cocina_precio_venta = articulo.precio_venta
+    this.cocina_stock = articulo.stock
    }
   }
 }
