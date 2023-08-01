@@ -13,13 +13,12 @@
           <thead>
             <tr>
               <th>#ID</th>
-              <th>SubTotal</th>
-              <th>Impuesto Generado * Venta</th>
-              <th>Descuento</th>
-              <th>Total</th>
               <th>Usuario</th>
               <th>Cliente</th>
               <th>Voucher</th>
+              <th>Descuento</th>
+              <th>SubTotal</th>
+              <th>Total</th>
               <th>Fecha</th>
             </tr>
           </thead>
@@ -29,13 +28,12 @@
               :key="venta.id"
             >
                 <td>{{ venta.id }}</td>
-                <td>{{ venta.subtotal}}</td>
-                <td>{{ venta.impuesto_generado_venta }}</td>
-                <td>{{ venta.descuento }}</td>
-                <td>{{ venta.total }}</td>
                 <td>{{ venta.nombre_usuario }}</td>
                 <td>{{ venta.cliente }}</td>
-                <td>{{ venta.voucher_id }}</td>
+                <td>{{ venta.voucher }}</td>
+                <td>{{ venta.descuento }}</td>
+                <td>{{ venta.subtotal}}</td>
+                <td>{{ venta.total }}</td>
                 <td>{{ venta.fecha }}</td>
             </tr>
           </tbody>

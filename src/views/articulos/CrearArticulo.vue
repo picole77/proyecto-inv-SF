@@ -40,11 +40,18 @@
                     required
                     >
                     </v-text-field>
+                    <v-text-field color="#76FF03" v-model="articulo.caducidad"
+                        label="Fecha de caducidad"
+                        hint="MM/DD/YYYY format"
+                        type="date"
+                        outlined
+                        required
+                    ></v-text-field>
                     <v-text-field color="#76FF03" v-model="articulo.stock"
-                    label="stock"
-                    outlined
-                    type="number"
-                    required
+                        label="stock"
+                        outlined
+                        type="number"
+                        required
                     >
                     </v-text-field>
                     <v-card-actions>
@@ -74,30 +81,31 @@ export default{
                 descripcion:'',
                 precio_compra:'',
                 precio_venta: '',
+                caducidad: '',
                 stock:''
             }
         };
     },
-    methods:{
-        guardarArticulo: async function(){
-        let router = this.$router; 
-        // console.log(router);
-        let params = this.articulo;
+    methods: {
+        guardarArticulo: async function() {
+            let router = this.$router; 
+            // console.log(router);
+            let params = this.articulo;
 
-        axios.post(url, params)
-        .then((response)=>{
-            if(response.data.status) {
-                    VueSimpleAlert.fire({
-                        title: 'Creado',
-                        text: response.data.message,
-                        type: 'success'
-                    }).then( () => router.push('/articulos/listar'))
-                }
-        }) 
-        .catch((error)=>{
-            console.log(error);
-        })
-    }
+            axios.post(url, params)
+            .then((response)=>{
+                if(response.data.status) {
+                        VueSimpleAlert.fire({
+                            title: 'Creado',
+                            text: response.data.message,
+                            type: 'success'
+                        }).then( () => router.push('/articulos/listar'))
+                    }
+            }) 
+            .catch((error)=>{
+                console.log(error);
+            })
+        }
     }
 }
 </script>
