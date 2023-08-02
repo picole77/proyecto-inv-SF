@@ -88,7 +88,6 @@
           <td class="w-100">
             <v-btn :to="{name:'editar_articulo', params:{id:articulo.id}}" fab small color="light-blue"><v-icon>mdi-pencil</v-icon></v-btn>
             <v-btn @click.stop="dialog=true" @click="id=articulo.id" fab small color="orange darken-4"><v-icon>mdi-delete</v-icon></v-btn>
-            <v-btn color="primary" dark @click.stop="cocinaDialog=true" @click="sendToCocina(articulo)" fab small> <v-icon>mdi-basket</v-icon></v-btn>
           </td>
         </tr>
       </tbody>
@@ -259,7 +258,7 @@
               >
                 <v-btn
                   @click="insertProductIntoTable"
-                  color="success"
+                  color="primary"
                 >
                   Agregar
                 </v-btn>
@@ -285,8 +284,8 @@
               </thead>
               <tbody>
                 <tr v-for="product in ingreso.products"
-                :key="product.id">
-                  <td>{{ product.id }}</td>
+                :key="product.id_producto">
+                  <td>{{ product.id_producto }}</td>
                   <td>{{ product.nombre }}</td>
                   <td class="text-center">{{ product.cantidad }}</td>
                   <td class="text-center">
@@ -302,7 +301,7 @@
             <v-spacer></v-spacer>
 
             <v-btn
-              color="info darken-1"
+              color="secondary darken-1"
               @click="ingresoDialog = false"
             >
               Cancelar
@@ -329,20 +328,146 @@
           aspect-radio="2.75"
           ></v-img>
           <v-card-title class="headline">Entrega de Productos</v-card-title>
-          <div>
+          <v-row class="justify-start mx-4">
+            <v-col
+              class="d-flex mt-4"
+              cols="12"
+              sm="4"
+            >
+              <v-text-field color="#76FF03"
+                v-model="entrega.fecha"
+                  label="Fecha de entrega"
+                  hint="MM/DD/YYYY format"
+                  type="date"
+                  outlined
+                  required
+              ></v-text-field>
+            </v-col>
+            <v-col 
+            class="d-flex"
+            cols="12"
+            sm="12"
+            >
+              <v-select outlined
+                @change="selectClient(entrega.clientes.id)"
+                v-model="entrega.clientes"
+                :items="clientes" 
+                item-text="nombre"
+                item-value="id"
+                return-object
+                required
+                label="Personal de cocina"
+              >
+              </v-select>
+            </v-col>
+            <v-col 
+            class="d-flex"
+            cols="12"
+            sm="12"
+            >
+              <v-select outlined
+                @change="selectProductToCocina(entrega.producto.id)"
+                v-model="entrega.producto"
+                :items="articulos" 
+                item-text="nombre"
+                item-value="id"
+                return-object
+                required
+                label="Seleccione un producto"
+              >
+              </v-select>
+            </v-col>
+            <v-col 
+            class="d-flex align-baseline"
+            cols="12"
+            sm="6">
+              <v-text-field
+              v-model="entrega.precio"
+              color="#76FF03"
+              type="number"
+              label="Precio"
+              outlined
+              required
+              ></v-text-field>
+            </v-col>
+            <v-col 
+            class="d-flex px-0"
+            cols="12"
+            sm="12"
+            >
+              <v-col 
+                class="d-flex"
+                cols="12"
+                sm="6"
+              >
+              <v-text-field
+                v-model="entrega.cantidad"
+                class="w-25"
+                color="#76FF03"
+                label="Cantidad"
+                type="number"
+                outlined
+                required
+              ></v-text-field>
+              </v-col>
+              <v-col 
+                class="d-flex"
+                cols="12"
+                sm="6"
+              >
+                <v-btn
+                  @click="insertProductIntoTable"
+                  color="primary"
+                >
+                  Agregar
+                </v-btn>
+              </v-col>
+          
+            </v-col>
+          </v-row>
+          <div class="mx-4">
+            <v-simple-table>
+              <thead>
+                <th class="primary--text text-left">
+                  #ID
+                </th>
+                <th class="primary--text text-left">
+                  Producto
+                </th>
+                <th class="primary--text">
+                  Cantidad
+                </th>
+                <th class="primary--text">
+                  Opciones
+                </th>
+              </thead>
+              <tbody>
+                <tr v-for="product in entrega.products"
+                :key="product.id_producto">
+                  <td>{{ product.id_producto }}</td>
+                  <td>{{ product.nombre }}</td>
+                  <td class="text-center">{{ product.cantidad }}</td>
+                  <td class="text-center">
+                    <v-btn class="text-center" fab small color="red darken-4">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                  </td>
+                </tr>
+              </tbody>
+            </v-simple-table>
           </div>
 
           <v-spacer></v-spacer>
           <v-card-actions>
             <v-btn
-              color="green darken-1"
+              color="secondary darken-1"
               @click="entregaDialog = false"
             >
               Cancelar
             </v-btn>
 
             <v-btn
-              color="green darken-1"
+              color="success darken-1"
               @click="entregaDialog = false"
             >
               Guardar
@@ -379,10 +504,20 @@ export default{
       cocina_precio_venta: null,
       cocina_stock : null,
       ingreso: {
-        id: 0,
+        id_producto: 0,
         select: null,
         nombre: '',
         fecha: new Date().toISOString().split('T')[0],
+        precio: 0,
+        cantidad: 0,
+        products: []
+      },
+      entrega: {
+        id_producto: 0,
+        clientes: null,
+        producto: null,
+        fecha: new Date().toISOString().split('T')[0],
+        nombre: '',
         precio: 0,
         cantidad: 0,
         products: []
@@ -440,14 +575,17 @@ export default{
       // find element into array using id
       const article = this.articulos.find(item => item.id === id)
       // insert values into fields
-      this.ingreso.id = article.id
+      this.ingreso.id_producto = article.id
       this.ingreso.nombre = article.nombre
       this.ingreso.precio = article.precio_venta
+    },
+    selectProductToCocina(producto) {
+
     },
     insertProductIntoTable() {
       // create object to save into array
         const product = {
-          "id": this.ingreso.id,
+          "id_producto": this.ingreso.id_producto,
           "nombre": this.ingreso.nombre,
           "precio": this.ingreso.precio,
           "cantidad": this.ingreso.cantidad,
@@ -456,7 +594,7 @@ export default{
         // insert product into array
         this.ingreso.products.push(product)
         // when pushed object into array clean values
-        this.ingreso.id = 0
+        this.ingreso.id_producto = 0
         this.ingreso.select = null
         this.ingreso.nombre = ""
         this.ingreso.precio = 0,
