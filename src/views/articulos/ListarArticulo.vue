@@ -289,7 +289,7 @@
                   <td>{{ product.nombre }}</td>
                   <td class="text-center">{{ product.cantidad }}</td>
                   <td class="text-center">
-                    <v-btn class="text-center" fab small color="red darken-4">
+                    <v-btn class="text-center" fab small color="red darken-4" @click="deleteItemEntrega(product.id_producto)">
                       <v-icon>mdi-delete</v-icon>
                     </v-btn>
                   </td>
@@ -302,7 +302,7 @@
 
             <v-btn
               color="secondary darken-1"
-              @click="ingresoDialog = false"
+              @click="cleanListOfProducts"
             >
               Cancelar
             </v-btn>
@@ -508,8 +508,8 @@ export default{
         select: null,
         nombre: '',
         fecha: new Date().toISOString().split('T')[0],
-        precio: 0,
-        cantidad: 0,
+        precio: null,
+        cantidad: null,
         products: []
       },
       entrega: {
@@ -518,8 +518,8 @@ export default{
         producto: null,
         fecha: new Date().toISOString().split('T')[0],
         nombre: '',
-        precio: 0,
-        cantidad: 0,
+        precio: null,
+        cantidad: null,
         products: []
       }
     }
@@ -579,8 +579,18 @@ export default{
       this.ingreso.nombre = article.nombre
       this.ingreso.precio = article.precio_venta
     },
+    cleanListOfProducts() {
+      this.ingreso.products = []
+      this.ingresoDialog = false
+    },
+    deleteItemEntrega(id) {
+      // find item id
+      const findId = this.ingreso.products.map(item => item.id_producto).indexOf(id)
+      // remove from array
+      this.ingreso.products.splice(findId, 1)
+    },
     selectProductToCocina(producto) {
-
+      console.log(producto);
     },
     insertProductIntoTable() {
       // create object to save into array
@@ -597,12 +607,12 @@ export default{
         this.ingreso.id_producto = 0
         this.ingreso.select = null
         this.ingreso.nombre = ""
-        this.ingreso.precio = 0,
-        this.ingreso.cantidad = 0
+        this.ingreso.precio = null,
+        this.ingreso.cantidad = null
     },
     saveAllProductsIntoCocina() {
       // axios request to save products
-      axios.post(`${url}/cocina`, this.ingreso.products)
+      axios.put(`${url}/multiple`, this.ingreso.products)
       .then(response => {
         console.log(response);
       })
