@@ -4,10 +4,32 @@
       <div>
         <h1>Ventas</h1>
       </div>
-      <div class="d-flex justify-start">
-        <v-label>Nueva Venta</v-label>
-        <v-btn fab darck color="#00c853" @click.stop="ventaDialog=true"><v-icon>mdi-plus</v-icon></v-btn>
+      <div>
+        
+        <h2>seleccione el tipo de Venta</h2>
+        <v-layout class="overflow-visible" style="height: 56px;">
+      <v-bottom-navigation
+        v-model="value"
+        :bg-color="deep-orange"
+        mode="shift"
+      >
+        <v-btn
+        color="#2962FF" @click.stop="ventaDialog = true">
+          <v-icon>mdi-television-play</v-icon>
+
+          <span>Venta de producto</span>
+        </v-btn>
+
+        <v-btn color="#B71C1C" @click.stop="ventaDialog = true">
+          <v-icon>mdi-music-note</v-icon>
+
+          <span>Venta de alimentos</span>
+        </v-btn>
+      </v-bottom-navigation>
+    </v-layout>
+       
       </div>
+      
       <v-container>
         <v-simple-table>
           <thead>

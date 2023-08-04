@@ -46,11 +46,7 @@
         <span class="font-weight-black">Reportes</span>
       </v-btn>
     </router-link>
-    <router-link to="/calendario">
-      <v-btn  target="_blank" text>
-        <span class="font-weight-black">Calendario</span>
-      </v-btn>
-    </router-link>
+    
     <v-btn
     @click="logout()"
     >Cerrar Sesión</v-btn>

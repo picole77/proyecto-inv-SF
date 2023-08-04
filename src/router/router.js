@@ -92,14 +92,6 @@ const routes = [
     },
     component: () => import('@/views/ventas/Recibo.vue')
   },
-  {
-    path: '/calendario',
-    name: 'calendario',
-    meta: {
-      requiresAuth: true
-    },
-    component: () => import('@/views/articulos/CalendarioArticulos.vue'),
-  },
 ]
 
 const router = new VueRouter({

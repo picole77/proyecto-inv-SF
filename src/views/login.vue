@@ -109,6 +109,12 @@
                                                         v-model="form.password"
                                                         color="teal accent-3"
                                                     />
+                                                    
+                                                    <v-select
+                                                        :items="items"
+                                                        density="compact"
+                                                        label="Roll de ususario"
+                                                        ></v-select>
 
                                                     <v-text-field
                                                         label="Numero de Teléfono"
@@ -164,6 +170,9 @@ import axios from 'axios';
 import VueSimpleAlert from 'vue-simple-alert'
 
 export default {
+    data: () => ({
+        items: ['jefe de inventario', 'Administrador general', 'Usuario', 'Buzz'],
+    }),
     name: 'Login',
     data: function () {
         return {
@@ -183,6 +192,7 @@ export default {
         }
 
     },
+    
     props: {
         source: String
     },
