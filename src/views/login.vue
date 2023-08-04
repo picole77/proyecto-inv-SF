@@ -234,7 +234,6 @@ export default {
             this.form.image_name = this.form.image.name
             // console.log(this.form.image_name);
             formData.append('file', this.form.image)
-            formData.append('filename', this.form.image_name)
             formData.append('nombre_completo', this.form.nombre_completo)
             formData.append('nombre_usuario', this.form.nombre_usuario)
             formData.append('email', this.form.email)

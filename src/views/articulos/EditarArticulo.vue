@@ -39,6 +39,13 @@
                     required
                     >
                     </v-text-field>
+                    <v-text-field color="#76FF03" v-model="articulo.caducidad"
+                        label="Fecha de caducidad"
+                        hint="MM/DD/YYYY format"
+                        type="date"
+                        outlined
+                        required
+                    ></v-text-field>
                     <v-text-field v-model="articulo.stock"
                     label="stock"
                     outlined
