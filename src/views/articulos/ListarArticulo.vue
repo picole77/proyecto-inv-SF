@@ -336,7 +336,7 @@
             >
               <v-text-field color="#76FF03"
                 v-model="entrega.fecha"
-                  label="Fecha de entrega"
+                  label="Fecha de entrega de productos"
                   hint="MM/DD/YYYY format"
                   type="date"
                   outlined
@@ -356,7 +356,7 @@
                 item-value="id"
                 return-object
                 required
-                label="Personal de cocina"
+                label="Personal de cocina que recibe producto "
               >
               </v-select>
             </v-col>
@@ -373,7 +373,7 @@
                 item-value="id"
                 return-object
                 required
-                label="Seleccione un producto"
+                label="Seleccione un productos"
               >
               </v-select>
             </v-col>
@@ -385,7 +385,7 @@
               v-model="entrega.precio"
               color="#76FF03"
               type="number"
-              label="Precio"
+              label="Precio de venta"
               outlined
               required
               ></v-text-field>
@@ -404,7 +404,7 @@
                 v-model="entrega.cantidad"
                 class="w-25"
                 color="#76FF03"
-                label="Cantidad"
+                label="Cantidad de unidades entregadas"
                 type="number"
                 outlined
                 required
