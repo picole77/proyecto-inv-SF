@@ -73,11 +73,9 @@
     <v-layout row justify-center>
         <v-dialog
           v-model="ventaDialog"
-          max-width="600"
-        >
+          max-width="600">
           <v-card>
             <v-img
-            
             aspect-radio="2.75"
             ></v-img>
             <v-card-title class="headline">Agregar Articulos a Cocina</v-card-title>
