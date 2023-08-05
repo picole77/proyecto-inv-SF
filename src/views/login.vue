@@ -170,12 +170,10 @@ import axios from 'axios';
 import VueSimpleAlert from 'vue-simple-alert'
 
 export default {
-    data: () => ({
-        items: ['jefe de inventario', 'Administrador general', 'Usuario', 'Buzz'],
-    }),
     name: 'Login',
     data: function () {
         return {
+            items: ['jefe de inventario', 'Administrador general', 'Usuario', 'Buzz'],
             step: 1,
             nombre_usuario: '',
             password: '',
@@ -199,7 +197,8 @@ export default {
     methods: {
         login: async function() {
             let url = 'http://localhost:3000/login'
-            const optionThis = this
+            let optionThis = this
+
             await axios.post(url, {
                 nombre_usuario: this.nombre_usuario,
                 password: this.password
@@ -217,7 +216,7 @@ export default {
                     text: 'Se ha logueado correctamente',
                     type: 'success',
                     timer: 1500
-                }).then( () => optionThis.$router.push("/") )
+                }).then( () => { optionThis.$router.push('/') })
                 // redirect to list articulos
                 
             })
@@ -239,7 +238,8 @@ export default {
         },
         register: async function() {
             let url = 'http://localhost:3000/register'
-            
+            let self = this
+
             let formData = new FormData();
             this.form.image_name = this.form.image.name
             // console.log(this.form.image_name);
@@ -260,7 +260,7 @@ export default {
                         text: 'Se ha registrado correctamente',
                         type: 'success',
                         timer: 1500
-                    }).then( () => this.$router.push('/login'))
+                    }).then( () =>  self.$router.push('/login'))
                 }
                     
             })
