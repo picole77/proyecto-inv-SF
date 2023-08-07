@@ -111,9 +111,16 @@
                                                     />
                                                     
                                                     <v-select
+                                                        @change="selectRol(roles.id)"
+                                                        v-model="roles"
                                                         :items="items"
+                                                        item-text="type"
+                                                        item-value="id"
+                                                        prepend-icon="account-key-online"
                                                         density="compact"
-                                                        label="Roll de ususario"
+                                                        name="rol"
+                                                        return-object
+                                                        label="Roles de ususario"
                                                         ></v-select>
 
                                                     <v-text-field
@@ -173,7 +180,12 @@ export default {
     name: 'Login',
     data: function () {
         return {
-            items: ['jefe de inventario', 'Administrador general', 'Usuario', 'Buzz'],
+            items: [
+                {'type':'Administrador general', 'id': 1},
+                {'type':'Jefe de Inventario', 'id': 2},
+                {'type': 'Usuario','id': 3}
+            ],
+            roles: null,
             step: 1,
             nombre_usuario: '',
             password: '',
@@ -181,6 +193,7 @@ export default {
                 nombre_completo: '',
                 email: '',
                 nombre_usuario: '',
+                rol: 3,
                 password: '',
                 numero_telefonico: '',
                 address: '',
@@ -246,6 +259,7 @@ export default {
             formData.append('file', this.form.image)
             formData.append('nombre_completo', this.form.nombre_completo)
             formData.append('nombre_usuario', this.form.nombre_usuario)
+            formData.append('rol', this.form.rol)
             formData.append('email', this.form.email)
             formData.append('password', this.form.password)
             formData.append('numero_telefonico', this.form.numero_telefonico)
@@ -275,6 +289,10 @@ export default {
                     timer: 1500
                 })
             })
+        },
+        selectRol(id) {
+            console.log(id);
+            this.form.rol = id
         }
     }
     
