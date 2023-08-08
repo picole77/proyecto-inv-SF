@@ -26,19 +26,34 @@
         <thead>
           <tr>
             <th class="primary--text">
-              IDDD
+              #ID
             </th>
             <th class="primary--text">
-              Descripcion
+              Codigo de Barras
+            </th>
+            <th class="primary--text">
+              Producto
             </th>
             <th class="primary--text">
               Precio
             </th>
-            <th class="primary--text">
+            <th class="text-right primary--text">
               Stock
             </th>
-            <th class="text-right primary--text">
-              Acciones
+            <th class="primary--text">
+              Caducidad
+            </th>
+            <th class="primary--text">
+              Entregó
+            </th>
+            <th class="primary--text">
+              Recibió
+            </th>
+            <th class="primary--text">
+              Imagen
+            </th>
+            <th class="primary--text">
+              Opciones
             </th>
           </tr>
         </thead>
@@ -46,17 +61,17 @@
         <tbody class="font-weight-bold">
           <tr v-for="articulo in articulos" :key="articulo.id">
             <td>{{ articulo.id }}</td>
-            <td>{{ articulo.descripcion}}</td>
-            <td>{{ articulo.precio.toFixed(2)}}</td>
+            <td>{{ articulo.codigo_barras}}</td>
+            <td>{{ articulo.precio }}</td>
             <td>{{ articulo.stock }}</td>
-
-
+            <td>{{ articulo.caducidad }}</td>
+            <td>{{ articulo.usuario }}</td>
+            <td>{{ articulo.cliente }}</td>
+            <td>{{ articulo.imagen }}</td>
             <td>
               <v-btn :to="{name:'editar', params:{id:articulo.id}}" fab small color="light-blue"><v-icon>mdi-pencil</v-icon></v-btn>
               <v-btn @click.stop="dialog=true" @click=" id=articulo.id" fab small color="orange darken-4"><v-icon>mdi-delete</v-icon></v-btn>
             </td>
-
-
           </tr>
         </tbody>
       </v-simple-table>
@@ -76,7 +91,7 @@
 </template>
 
 <script>
-let url = 'http://localhost:3000/api/articulos/';
+let url = 'http://localhost:3000/api/';
 import axios from 'axios';
 export default{
   name:'listar',
@@ -86,14 +101,14 @@ export default{
   data(){
     return{
       dialog: false,
-      articulos:null
+      articulos:[]
     }
   },
   methods:{
     obtenerArticulos(){
-      axios.get(url)
+      axios.get(`${url}cocina?page=1&limit=25`)
       .then(response => {
-      this.articulos = response.data;
+        this.articulos = response.data.data;
       })
       .catch((error) => {
         console.log(error);
