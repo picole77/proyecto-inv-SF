@@ -26,7 +26,7 @@
         <span class="font-weight-black">Inicio</span>
       </v-btn>
     </router-link>
-    <router-link to="/articulos/listar">
+    <router-link to="/articulos/listar" v-if="rolOfUser() === 1 || rolOfUser() === 2">
       <v-btn target ="_blank" text >
         <span class="font-weight-black">Almacen</span>
       </v-btn>
@@ -36,12 +36,12 @@
         <span class="font-weight-black">Cocina</span>
       </v-btn>
     </router-link>
-    <router-link to="/ventas">
+    <router-link to="/ventas" v-if="rolOfUser() === 1 || rolOfUser() === 2">
       <v-btn target ="_blank" text >
         <span class="font-weight-black">Ventas</span>
       </v-btn>
     </router-link>
-    <router-link to="/reportes">
+    <router-link to="/reportes" v-if="rolOfUser() === 1 || rolOfUser() === 2">
       <v-btn  target="_blank" text>
         <span class="font-weight-black">Reportes</span>
       </v-btn>
@@ -63,6 +63,12 @@ export default {
         }
     },
     methods: {
+        rolOfUser() {
+          const session = localStorage.getItem('session')
+          const parseSession = JSON.parse(session)
+
+          return parseInt(parseSession.rol)
+        },
         checkIfIsLogged() {
             const session = localStorage.getItem('session')
 

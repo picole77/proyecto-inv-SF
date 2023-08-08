@@ -19,9 +19,20 @@
         </v-text-field>
       </v-toolbar>
     </v-card>
-    <v-btn to="/articulos/crear" fab darck color="#00c853"><v-icon>mdi-plus</v-icon></v-btn>
-    
-      <h5 >Agregar Articulo</h5>
+
+
+
+  <v-container>
+        <v-row no-gutters >
+          <v-col>
+            <v-btn to="/articulos/crear" tyle color="#00c853">
+              <v-icon left>mdi-plus</v-icon>
+             Agregar Nueva comida
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+
        <v-simple-table >
         <thead height="80px">
           <tr class="text-subtitle-8">

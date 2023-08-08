@@ -78,21 +78,45 @@
             <v-img
             aspect-radio="2.75"
             ></v-img>
-            <v-card-title class="headline">Agregar Articulos a Cocina</v-card-title>
+            <v-card-title class="headline e-font-color-2">Agregar Comida seleccionada</v-card-title>
             <div class="d-flex justify-end">
               <v-label class="text-h3 mr-10">0.00</v-label>
             </div>
-            <div class="ml-4">
-              <v-label>Código de barras</v-label>
-              <v-text-field list="results" variant="outlined" v-on:input="loadProductByBarCode"></v-text-field>
+            <div>
               <div>
-                <v-list class="d-flex">
-                  <v-list-tile v-for="product in products" :key="product.id" @click="selectProduct(product)">
-                    <v-list-tile-title>{{ product.nombre }}</v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
+
+              <v-select class="color-green"
+                    label="Seleccione el tipode comida "
+                    :items="['Entomatadas', 'Enfrijoladas', 'Sandwich', 'Huevos con jamon', 'Huevos a la mexicana', 'pechuga de pollo y ensalada']"
+              ></v-select>
               </div>
+              <div class="d-flex mx-2 justify-center">
+                 <v-col 
+                  class="d-flex"
+                  cols="12"
+                  sm="6"
+                >
+                <v-text-field
+                 
+                  class="w-25"
+                  color="#76FF03"
+                  label="Cantidad"
+                  type="number"
+                  outlined
+                  required
+                ></v-text-field>
+                 <div>
+                  <v-label>Precio</v-label>
+                  <v-text-field v-model="precio" variant="outlined"></v-text-field>
+                </div>
+                
+                </v-col>
+              </div>
+              
+
+                
             </div>
+            
             <v-divider color="info"></v-divider>
             <div class="d-flex mx-2 justify-center">
               <div>
@@ -109,6 +133,10 @@
               </div>
               <div>
                 <v-label>SubTotal</v-label>
+                <v-text-field v-model="subtotal" variant="outlined"></v-text-field>
+              </div>
+              <div>
+                <v-label>Total</v-label>
                 <v-text-field v-model="subtotal" variant="outlined"></v-text-field>
               </div>
             </div>

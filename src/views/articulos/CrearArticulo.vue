@@ -12,22 +12,26 @@
                 <form  @submit.prevent="guardarArticulo" enctype="multipart/form-data">
                     <v-text-field color="#76FF03" v-model="articulo.codigo_barras"
                     label="Código de Barras"
+                    name="codigo_barras"
                     outlined
                     required
                     >
                     </v-text-field>
                     <v-text-field color="#76FF03" v-model="articulo.nombre"
                     label="Nombre"
+                    name="nombre"
                     outlined
                     required
                     ></v-text-field>
                     <v-text-field color="#76FF03" v-model="articulo.descripcion"
                     label="Descripción"
+                    name="descripcion"
                     outlined
                     required
                     ></v-text-field>
                     <v-text-field color="#76FF03" v-model="articulo.precio_compra"
                     label="Precio de compra"
+                    name="precio_compra"
                     outlined
                     prefix="$"
                     required
@@ -35,6 +39,7 @@
                     </v-text-field>
                     <v-text-field color="#76FF03" v-model="articulo.precio_venta"
                     label="Precio de venta"
+                    name="precio_venta"
                     outlined
                     prefix="$"
                     required
@@ -44,6 +49,7 @@
                         label="Fecha de caducidad"
                         hint="MM/DD/YYYY format"
                         type="date"
+                        name="caducidad"
                         outlined
                         required
                     ></v-text-field>
@@ -51,9 +57,18 @@
                         label="stock"
                         outlined
                         type="number"
+                        name="stock"
                         required
                     >
                     </v-text-field>
+                    <v-file-input 
+                        label="Imagen de usuario"
+                        name="imagen"
+                        v-model="articulo.file"
+                        accept="image/*"
+                        @onchange="uploadImage($event.target.files)"
+                    >
+                    </v-file-input>
                     <v-card-actions>
                         <v-btn  to="/articulos/listar" color="#FF5722" class="mr-4">Cancelar</v-btn>
                         <v-btn type="submit" color="#00C853" class="mr-4">Guardar</v-btn>
@@ -82,7 +97,8 @@ export default{
                 precio_compra:'',
                 precio_venta: '',
                 caducidad: '',
-                stock:''
+                stock:'',
+                file: null
             }
         };
     },
@@ -90,9 +106,20 @@ export default{
         guardarArticulo: async function() {
             let router = this.$router; 
             // console.log(router);
-            let params = this.articulo;
+            // let params = this.articulo;
 
-            axios.post(url, params)
+            let formData = new FormData()
+
+            formData.append("file",this.articulo.file)
+            formData.append('codigo_barras', this.articulo.codigo_barras)
+            formData.append('nombre', this.articulo.nombre)
+            formData.append('descripcion', this.articulo.descripcion)
+            formData.append('precio_compra', this.articulo.precio_compra)
+            formData.append('precio_venta', this.articulo.precio_venta)
+            formData.append('caducidad', this.articulo.caducidad)
+            formData.append('stock', this.articulo.stock)
+
+            axios.post(url, formData)
             .then((response)=>{
                 if(response.data.status) {
                         VueSimpleAlert.fire({
@@ -105,6 +132,9 @@ export default{
             .catch((error)=>{
                 console.log(error);
             })
+        },
+        uploadImage(files) {
+            this.articulo.file = files[0]
         }
     }
 }

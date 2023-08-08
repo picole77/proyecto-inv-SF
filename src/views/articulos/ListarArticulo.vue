@@ -203,11 +203,25 @@
               ></v-text-field>
             </v-col>
             <v-col 
+              class="d-flex align-baseline"
+              cols="12"
+              sm="12">
+                <v-text-field
+                v-model="ingreso.usuario"
+                color="#76FF03"
+                label="Usuario"
+                outlined
+                readonly
+                required
+                ></v-text-field>
+              </v-col>
+            <v-col 
             class="d-flex"
             cols="12"
             sm="12"
             >
-              <v-select outlined
+              <v-select 
+                outlined
                 @change="selectProduct(ingreso.select.id)"
                 v-model="ingreso.select"
                 :items="articulos" 
@@ -289,7 +303,7 @@
                   <td>{{ product.nombre }}</td>
                   <td class="text-center">{{ product.cantidad }}</td>
                   <td class="text-center">
-                    <v-btn class="text-center" fab small color="red darken-4">
+                    <v-btn class="text-center" fab small color="red darken-4" @click="deleteItemEntrega(product.id_producto)">
                       <v-icon>mdi-delete</v-icon>
                     </v-btn>
                   </td>
@@ -302,7 +316,7 @@
 
             <v-btn
               color="secondary darken-1"
-              @click="ingresoDialog = false"
+              @click="cleanListOfProducts"
             >
               Cancelar
             </v-btn>
@@ -481,7 +495,7 @@
 </template>
 
 <script>
-let url = 'http://localhost:3000/api/articulos';
+let url = 'http://localhost:3000/api/';
 import axios from 'axios';
 import VueSimpleAlert from 'vue-simple-alert'
 
@@ -489,6 +503,8 @@ export default{
   name:'listar',
   mounted(){
     this.obtenerArticulos();
+    this.currentUser(),
+    this.clientsList()
   },
   data(){
     return{
@@ -496,6 +512,7 @@ export default{
       ingresoDialog: false,
       entregaDialog: false,
       cocinaDialog: false,
+      clientes: [],
       articulos:null,
       cocina_codigo_barras: '',
       cocina_nombre: '',
@@ -506,10 +523,11 @@ export default{
       ingreso: {
         id_producto: 0,
         select: null,
+        usuario: '',
         nombre: '',
         fecha: new Date().toISOString().split('T')[0],
-        precio: 0,
-        cantidad: 0,
+        precio: null,
+        cantidad: null,
         products: []
       },
       entrega: {
@@ -518,15 +536,15 @@ export default{
         producto: null,
         fecha: new Date().toISOString().split('T')[0],
         nombre: '',
-        precio: 0,
-        cantidad: 0,
+        precio: null,
+        cantidad: null,
         products: []
       }
     }
   },
   methods:{
     obtenerArticulos(){
-      axios.get(`${url}?page=1&limit=25`)
+      axios.get(`${url}articulos?page=1&limit=25`)
       .then(response => {
       this.articulos = response.data.data;
       })
@@ -535,7 +553,7 @@ export default{
       })
     },
     confirmarBorrado(id){
-      axios.delete(`${url}/${id}`)
+      axios.delete(`${url}articulos/${id}`)
       .then(()=>{
         // display success deleted
         VueSimpleAlert.fire({
@@ -571,6 +589,21 @@ export default{
       this.cocina_precio_venta = articulo.precio_venta
       this.cocina_stock = articulo.stock
     },
+    currentUser() {
+      const session = localStorage.getItem('session')
+      const parseSession = JSON.parse(session)
+
+      this.ingreso.usuario = parseSession.nombre_usuario
+    },
+    clientsList() {
+      axios.get(`${url}clientes?page=1&limit=25`)
+      .then(response => {
+        this.clientes = response.data.data
+      })
+    },
+    selectClient(id) {
+      this.entrega.clientes = id
+    },
     selectProduct(id) {
       // find element into array using id
       const article = this.articulos.find(item => item.id === id)
@@ -579,8 +612,18 @@ export default{
       this.ingreso.nombre = article.nombre
       this.ingreso.precio = article.precio_venta
     },
+    cleanListOfProducts() {
+      this.ingreso.products = []
+      this.ingresoDialog = false
+    },
+    deleteItemEntrega(id) {
+      // find item id
+      const findId = this.ingreso.products.map(item => item.id_producto).indexOf(id)
+      // remove from array
+      this.ingreso.products.splice(findId, 1)
+    },
     selectProductToCocina(producto) {
-
+      console.log(producto);
     },
     insertProductIntoTable() {
       // create object to save into array
@@ -597,17 +640,30 @@ export default{
         this.ingreso.id_producto = 0
         this.ingreso.select = null
         this.ingreso.nombre = ""
-        this.ingreso.precio = 0,
-        this.ingreso.cantidad = 0
+        this.ingreso.precio = null,
+        this.ingreso.cantidad = null
     },
     saveAllProductsIntoCocina() {
       // axios request to save products
-      axios.post(`${url}/cocina`, this.ingreso.products)
+      axios.put(`${url}articulos/multiple`, this.ingreso.products)
       .then(response => {
         console.log(response);
+        VueSimpleAlert.fire({
+          title: 'Productos Actualizados',
+          text: `${response.data.message}`,
+          type: 'success',
+          timer: 1500
+        }).then( () => {
+          this.cleanListOfProducts()
+        })
       })
       .catch(error => {
-        console.log(error);
+        VueSimpleAlert.fire({
+          title: 'Error',
+          text: 'Ocurrió un error al actualizar los productos',
+          type:'error',
+          timer: 1500
+        })
       })
     }
   }
