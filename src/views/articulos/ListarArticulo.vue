@@ -84,7 +84,7 @@
           <td>${{ articulo.precio_compra }}</td>
           <td>${{ articulo.precio_venta }}</td>
           <td>{{ articulo.stock }}</td>
-          <td><img :src="articulo.imagen" :alt="articulo.nombre"></td>
+          <td><img :src='url+articulo.imagen' :alt="articulo.nombre" width="80"></td>
           <td class="w-100">
             <v-btn :to="{name:'editar_articulo', params:{id:articulo.id}}" fab small color="light-blue"><v-icon>mdi-pencil</v-icon></v-btn>
             <v-btn @click.stop="dialog=true" @click="id=articulo.id" fab small color="orange darken-4"><v-icon>mdi-delete</v-icon></v-btn>
@@ -303,7 +303,7 @@
                   <td>{{ product.nombre }}</td>
                   <td class="text-center">{{ product.cantidad }}</td>
                   <td class="text-center">
-                    <v-btn class="text-center" fab small color="red darken-4" @click="deleteItemEntrega(product.id_producto)">
+                    <v-btn class="text-center" fab small color="red darken-4" @click="deleteItemIngreso(product.id_producto)">
                       <v-icon>mdi-delete</v-icon>
                     </v-btn>
                   </td>
@@ -443,7 +443,7 @@
                 sm="6"
               >
                 <v-btn
-                  @click="insertProductIntoTable"
+                  @click="insertProductIntoEntregaTable"
                   color="primary"
                 >
                   Agregar
@@ -475,7 +475,7 @@
                   <td>{{ product.nombre }}</td>
                   <td class="text-center">{{ product.cantidad }}</td>
                   <td class="text-center">
-                    <v-btn class="text-center" fab small color="red darken-4">
+                    <v-btn class="text-center" fab small color="red darken-4" @click="deleteItemEntrega(product.id_producto)">
                       <v-icon>mdi-delete</v-icon>
                     </v-btn>
                   </td>
@@ -488,14 +488,14 @@
           <v-card-actions>
             <v-btn
               color="secondary darken-1"
-              @click="entregaDialog = false"
+              @click="cleanListOfEntregaProducts()"
             >
               Cancelar
             </v-btn>
 
             <v-btn
               color="success darken-1"
-              @click="entregaDialog = false"
+              @click="saveAllProductsIntoCocina()"
             >
               Guardar
             </v-btn>
@@ -509,6 +509,7 @@
 
 <script>
 let url = 'http://localhost:3000/api/';
+let imageURL = "http://localhost:3000/products/"
 import axios from 'axios';
 import VueSimpleAlert from 'vue-simple-alert'
 
@@ -525,6 +526,7 @@ export default{
       ingresoDialog: false,
       entregaDialog: false,
       cocinaDialog: false,
+      url: imageURL,
       clientes: [],
       articulos:null,
       cocina_codigo_barras: '',
@@ -533,6 +535,7 @@ export default{
       cocina_precio_compra: null,
       cocina_precio_venta: null,
       cocina_stock : null,
+      id_usuario: 0,
       ingreso: {
         id_producto: 0,
         select: null,
@@ -545,9 +548,9 @@ export default{
       },
       entrega: {
         id_producto: 0,
-        usuario: 0,
-        clientes: null,
         producto: null,
+        usuario: '',
+        clientes: null,
         fecha: new Date().toISOString().split('T')[0],
         nombre: '',
         precio: null,
@@ -600,6 +603,7 @@ export default{
 
       this.ingreso.usuario = parseSession.nombre_usuario
       this.entrega.usuario = parseSession.nombre_usuario
+      this.id_usuario = parseSession.id
     },
     clientsList() {
       axios.get(`${url}clientes?page=1&limit=25`)
@@ -613,24 +617,54 @@ export default{
     /**********************************************/
     /************** INGRESO METHODS **************/
     /*********************************************/
-    selectProductToCocina(producto) {
-      console.log(producto);
+    selectProductToCocina(id) {
+      // find element into array using id
+      const article = this.articulos.find(item => item.id === id)
+      // insert values into fields
+      this.entrega.id_producto = article.id
+      this.entrega.nombre = article.nombre
+      this.entrega.precio = article.precio_venta
     },
-    insertProductIntoEgresoTable() {
+    cleanListOfEntregaProducts() {
+      this.entrega.products = []
+      this.entregaDialog = false
+    },
+    deleteItemEntrega(id) {
+      // find item id
+      const findId = this.entrega.products.map(item => item.id_producto).indexOf(id)
+      // remove from array
+      this.entrega.products.splice(findId, 1)
+    },
+    insertProductIntoEntregaTable() {
       // create object to save into array
         const product = {
           "id_producto": this.entrega.id_producto,
           "nombre": this.entrega.nombre,
           "precio": this.entrega.precio,
           "cantidad": this.entrega.cantidad,
+          "id_usuario": this.id_usuario,
+          "cliente": this.entrega.clientes,
           "fecha": this.entrega.fecha
+        }
+        console.log(product);
+        if(product.id_producto === 0 && product.nombre === '') {
+          
+          VueSimpleAlert.fire({
+            title: 'Error',
+            text: '¡Campos vacios, por favor seleccione un producto y vuelva a intentarlo!',
+            type: 'info'
+          })
+
+          return
         }
         // insert product into array
         this.entrega.products.push(product)
         // when pushed object into array clean values
         this.entrega.id_producto = 0
+        this.entrega.clientes = null
+        this.entrega.producto = null
         this.entrega.nombre = ""
-        this.entrega.precio = null,
+        this.entrega.precio = null
         this.entrega.cantidad = null
     },
     sendToCocina(articulo) {
@@ -644,10 +678,10 @@ export default{
 
       axios.post(`${url}cocina/registrar`)
       .then( response => {
-
+        console.log(response);
       })
       .catch(error => {
-
+        console.log(error);
       })
     },
     /**********************************************/
@@ -665,7 +699,7 @@ export default{
       this.ingreso.products = []
       this.ingresoDialog = false
     },
-    deleteItemEntrega(id) {
+    deleteItemIngreso(id) {
       // find item id
       const findId = this.ingreso.products.map(item => item.id_producto).indexOf(id)
       // remove from array
@@ -679,6 +713,17 @@ export default{
           "precio": this.ingreso.precio,
           "cantidad": this.ingreso.cantidad,
           "fecha": this.ingreso.fecha
+        }
+        // console.log(product);
+        if(product.id_producto === 0 && product.nombre === '') {
+          
+          VueSimpleAlert.fire({
+            title: 'Error',
+            text: '¡Campos vacios, por favor seleccione un producto y vuelva a intentarlo!',
+            type: 'info'
+          })
+
+          return
         }
         // insert product into array
         this.ingreso.products.push(product)
