@@ -57,6 +57,15 @@ const routes = [
     },
     component: () => import('@/views/articulos_cocina/ListarArticulosCocina.vue'),
   },
+  // crear comida
+  {
+    path: '/articulos-cocina/crear',
+    name: 'crear_articulo_cocina',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/articulos_cocina/Crearcomida.vue')
+  },
   // crear
   {
     path: '/articulos-cocina/crear',

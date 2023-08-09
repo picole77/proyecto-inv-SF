@@ -9,9 +9,14 @@
           </v-text-field>
         </v-toolbar>
       </v-card>
-      <v-btn to="/articulos/crear" fab darck color="#00c853"><v-icon>mdi-plus</v-icon></v-btn>
+      <div><v-btn to="/articulos/crear" fab darck color="#00c853"><v-icon>mdi-plus</v-icon></v-btn>
 
-      <h5>Agregar Articulo</h5>
+      <h5>Agregar Articuloooo</h5>
+      <v-btn to="/src/views/articulos_cocina/Crearcomida.vue" fab darck color="#00c853"><v-icon>mdi-plus</v-icon></v-btn>
+
+        <h5>Agregar Comida</h5>
+    </div>
+      
       <v-simple-table>
         <thead>
           <tr>

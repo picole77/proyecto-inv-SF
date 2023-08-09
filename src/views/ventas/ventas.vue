@@ -20,7 +20,7 @@
           <span>Venta de producto</span>
         </v-btn>
 
-        <v-btn color="#B71C1C" @click.stop="ventaDialog = true">
+        <v-btn color="#B71C1C" @click.stop="ventaDialogcomida = true">
           <v-icon>mdi-music-note</v-icon>
 
           <span>Venta de alimentos</span>
@@ -69,7 +69,7 @@
       </div> 
     </v-card>
   
-    <!-- COCINA DIALOG -->
+    <!-- comida DIALOG -->
     <v-layout row justify-center>
         <v-dialog
           v-model="ventaDialog"
@@ -84,7 +84,6 @@
             </div>
             <div>
               <div>
-
               <v-select class="color-green"
                     label="Seleccione el tipode comida "
                     :items="['Entomatadas', 'Enfrijoladas', 'Sandwich', 'Huevos con jamon', 'Huevos a la mexicana', 'pechuga de pollo y ensalada']"
@@ -96,8 +95,7 @@
                   cols="12"
                   sm="6"
                 >
-                <v-text-field
-                 
+                <v-text-field         
                   class="w-25"
                   color="#76FF03"
                   label="Cantidad"
@@ -108,16 +106,10 @@
                  <div>
                   <v-label>Precio</v-label>
                   <v-text-field v-model="precio" variant="outlined"></v-text-field>
-                </div>
-                
+                </div>  
                 </v-col>
-              </div>
-              
-
-                
+              </div>      
             </div>
-            
-            <v-divider color="info"></v-divider>
             <div class="d-flex mx-2 justify-center">
               <div>
                 <v-label>Nombre</v-label>
@@ -142,14 +134,12 @@
             </div>
             <v-card-actions>
               <v-spacer></v-spacer>
-  
               <v-btn
                 color="red darken-1"
                 @click="ventaDialog = false"
               >
                 Cancelar
               </v-btn>
-  
               <v-btn
                 color="green darken-1"
                 @click="saveSale({nombre, precio, cantidad, subtotal})"
@@ -160,6 +150,90 @@
           </v-card>
         </v-dialog>
     </v-layout>
+
+     <!-- producto DIALOG -->
+      <v-layout row justify-center>
+          <v-dialog
+            v-model="ventaDialog"
+            max-width="600">
+            <v-card>
+              <v-img
+              aspect-radio="2.75"
+              ></v-img>
+              <v-card-title class="headline e-font-color-2">Agregar producto seleccionado</v-card-title>
+              <div class="d-flex justify-end">
+                <v-label class="text-h3 mr-10">0.00</v-label>
+              </div>
+              <div>
+                <div>
+                <v-select class="color-green"
+                      label="Seleccione el tipode comida "
+                      :items="['Entomatadas', 'Enfrijoladas', 'Sandwich', 'Huevos con jamon', 'Huevos a la mexicana', 'pechuga de pollo y ensalada']"
+                ></v-select>
+                </div>
+                <div class="d-flex mx-2 justify-center">
+                   <v-col 
+                    class="d-flex"
+                    cols="12"
+                    sm="6"
+                  >
+                  <v-text-field         
+                    class="w-25"
+                    color="#76FF03"
+                    label="Cantidad"
+                    type="number"
+                    outlined
+                    required
+                  ></v-text-field>
+                   <div>
+                    <v-label>Precio</v-label>
+                    <v-text-field v-model="precio" variant="outlined"></v-text-field>
+                  </div>  
+                  </v-col>
+                </div>      
+              </div>
+              <div class="d-flex mx-2 justify-center">
+                <div>
+                  <v-label>Nombre</v-label>
+                  <v-text-field v-model="nombre" variant="outlined"></v-text-field>
+                </div>
+                <div>
+                  <v-label>Precio</v-label>
+                  <v-text-field v-model="precio" variant="outlined"></v-text-field>
+                </div>
+                <div>
+                  <v-label>Cantidad</v-label>
+                  <v-text-field v-model="cantidad" variant="outlined"></v-text-field>
+                </div>
+                <div>
+                  <v-label>SubTotal</v-label>
+                  <v-text-field v-model="subtotal" variant="outlined"></v-text-field>
+                </div>
+                <div>
+                  <v-label>Total</v-label>
+                  <v-text-field v-model="subtotal" variant="outlined"></v-text-field>
+                </div>
+              </div>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="red darken-1"
+                  @click="ventaDialog = false"
+                >
+                  Cancelar
+                </v-btn>
+                <v-btn
+                  color="green darken-1"
+                  @click="saveSale({ nombre, precio, cantidad, subtotal })"
+                >
+                  Guardar
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+      </v-layout>
+
+  
   </v-container>
 </template>
 
