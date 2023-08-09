@@ -27,7 +27,7 @@
             <th class="primary--text">
               Precio
             </th>
-            <th class="text-right primary--text">
+            <th class="primary--text">
               Stock
             </th>
             <th class="primary--text">
@@ -51,13 +51,14 @@
         <tbody class="font-weight-bold">
           <tr v-for="articulo in articulos" :key="articulo.id">
             <td>{{ articulo.id }}</td>
-            <td>{{ articulo.codigo_barras }}</td>
+            <td>{{ articulo.codigo_barras}}</td>
+            <td>{{ articulo.producto }}</td>
             <td>{{ articulo.precio }}</td>
             <td>{{ articulo.stock }}</td>
             <td>{{ articulo.caducidad }}</td>
             <td>{{ articulo.usuario }}</td>
             <td>{{ articulo.cliente }}</td>
-            <td>{{ articulo.imagen }}</td>
+            <td><img :src='url+articulo.imagen' :alt="articulo.nombre" width="80"></td>
             <td>
               <v-btn :to="{ name: 'editar', params: { id: articulo.id } }" fab small
                 color="light-blue"><v-icon>mdi-pencil</v-icon></v-btn>
@@ -81,9 +82,9 @@
     </v-container>
   </div>
 </template>
-
 <script>
 let url = 'http://localhost:3000/api/';
+const imageURL = "http://localhost:3000/products/"
 import axios from 'axios';
 export default {
   name: 'listar',
@@ -93,7 +94,8 @@ export default {
   data() {
     return {
       dialog: false,
-      articulos: []
+      url: imageURL,
+      articulos:[]
     }
   },
   methods: {
