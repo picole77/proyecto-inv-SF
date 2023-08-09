@@ -359,6 +359,19 @@
             </v-col>
 
             <v-col 
+            class="d-flex align-baseline"
+            cols="12"
+            sm="12">
+              <v-text-field
+              v-model="entrega.usuario"
+              color="#76FF03"
+              label="Usuario"
+              outlined
+              readonly
+              required
+              ></v-text-field>
+            </v-col>
+            <v-col 
             class="d-flex"
             cols="12"
             sm="12">
@@ -532,6 +545,7 @@ export default{
       },
       entrega: {
         id_producto: 0,
+        usuario: 0,
         clientes: null,
         producto: null,
         fecha: new Date().toISOString().split('T')[0],
@@ -554,7 +568,7 @@ export default{
     },
     confirmarBorrado(id){
       axios.delete(`${url}articulos/${id}`)
-      .then(()=>{
+      .then(() => {
         // display success deleted
         VueSimpleAlert.fire({
           title: 'Eliminado',
@@ -580,20 +594,12 @@ export default{
           
         })
     },
-    sendToCocina(articulo) {
-      console.log(articulo);
-      this.cocina_codigo_barras = articulo.codigo_barras
-      this.cocina_nombre = articulo.nombre
-      this.cocina_descripcion = articulo.descripcion
-      this.cocina_precio_compra = articulo.precio_compra
-      this.cocina_precio_venta = articulo.precio_venta
-      this.cocina_stock = articulo.stock
-    },
     currentUser() {
       const session = localStorage.getItem('session')
       const parseSession = JSON.parse(session)
 
       this.ingreso.usuario = parseSession.nombre_usuario
+      this.entrega.usuario = parseSession.nombre_usuario
     },
     clientsList() {
       axios.get(`${url}clientes?page=1&limit=25`)
@@ -604,6 +610,49 @@ export default{
     selectClient(id) {
       this.entrega.clientes = id
     },
+    /**********************************************/
+    /************** INGRESO METHODS **************/
+    /*********************************************/
+    selectProductToCocina(producto) {
+      console.log(producto);
+    },
+    insertProductIntoEgresoTable() {
+      // create object to save into array
+        const product = {
+          "id_producto": this.entrega.id_producto,
+          "nombre": this.entrega.nombre,
+          "precio": this.entrega.precio,
+          "cantidad": this.entrega.cantidad,
+          "fecha": this.entrega.fecha
+        }
+        // insert product into array
+        this.entrega.products.push(product)
+        // when pushed object into array clean values
+        this.entrega.id_producto = 0
+        this.entrega.nombre = ""
+        this.entrega.precio = null,
+        this.entrega.cantidad = null
+    },
+    sendToCocina(articulo) {
+      
+      this.cocina_codigo_barras = articulo.codigo_barras
+      this.cocina_nombre = articulo.nombre
+      this.cocina_descripcion = articulo.descripcion
+      this.cocina_precio_compra = articulo.precio_compra
+      this.cocina_precio_venta = articulo.precio_venta
+      this.cocina_stock = articulo.stock
+
+      axios.post(`${url}cocina/registrar`)
+      .then( response => {
+
+      })
+      .catch(error => {
+
+      })
+    },
+    /**********************************************/
+    /************** INGRESO METHODS **************/
+    /*********************************************/
     selectProduct(id) {
       // find element into array using id
       const article = this.articulos.find(item => item.id === id)
@@ -621,9 +670,6 @@ export default{
       const findId = this.ingreso.products.map(item => item.id_producto).indexOf(id)
       // remove from array
       this.ingreso.products.splice(findId, 1)
-    },
-    selectProductToCocina(producto) {
-      console.log(producto);
     },
     insertProductIntoTable() {
       // create object to save into array
