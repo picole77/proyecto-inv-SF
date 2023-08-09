@@ -343,11 +343,11 @@
           ></v-img>
           <v-card-title class="headline">Entrega de Productos</v-card-title>
           <v-row class="justify-start mx-4">
+
             <v-col
               class="d-flex mt-4"
               cols="12"
-              sm="4"
-            >
+              sm="4">
               <v-text-field color="#76FF03"
                 v-model="entrega.fecha"
                   label="Fecha de entrega de productos"
@@ -357,6 +357,7 @@
                   required
               ></v-text-field>
             </v-col>
+
             <v-col 
             class="d-flex align-baseline"
             cols="12"
@@ -373,8 +374,7 @@
             <v-col 
             class="d-flex"
             cols="12"
-            sm="12"
-            >
+            sm="12">
               <v-select outlined
                 @change="selectClient(entrega.clientes.id)"
                 v-model="entrega.clientes"
@@ -383,15 +383,15 @@
                 item-value="id"
                 return-object
                 required
-                label="Personal de cocina que recibe producto "
-              >
+                label="Personal de cocina que recibe los productos ">
               </v-select>
             </v-col>
+            
+
             <v-col 
             class="d-flex"
             cols="12"
-            sm="12"
-            >
+            sm="12">
               <v-select outlined
                 @change="selectProductToCocina(entrega.producto.id)"
                 v-model="entrega.producto"
@@ -400,10 +400,10 @@
                 item-value="id"
                 return-object
                 required
-                label="Seleccione un productos"
-              >
+                label="Seleccione los productos">
               </v-select>
             </v-col>
+            
             <v-col 
             class="d-flex align-baseline"
             cols="12"
@@ -417,6 +417,8 @@
               required
               ></v-text-field>
             </v-col>
+
+            
             <v-col 
             class="d-flex px-0"
             cols="12"
@@ -431,12 +433,13 @@
                 v-model="entrega.cantidad"
                 class="w-25"
                 color="#76FF03"
-                label="Cantidad de unidades entregadas"
+                label="Cantidad de unidades a entregar"
                 type="number"
                 outlined
                 required
               ></v-text-field>
               </v-col>
+
               <v-col 
                 class="d-flex"
                 cols="12"
@@ -461,11 +464,8 @@
                 <th class="primary--text text-left">
                   Producto
                 </th>
-                <th class="primary--text">
+                <th class="primary--text text-left">
                   Cantidad
-                </th>
-                <th class="primary--text">
-                  Opciones
                 </th>
               </thead>
               <tbody>
