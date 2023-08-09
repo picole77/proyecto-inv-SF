@@ -536,6 +536,7 @@ export default{
       cocina_precio_venta: null,
       cocina_stock : null,
       id_usuario: 0,
+      temp_ingreso_stock: 0,
       ingreso: {
         id_producto: 0,
         select: null,
@@ -713,6 +714,7 @@ export default{
       this.ingreso.id_producto = article.id
       this.ingreso.nombre = article.nombre
       this.ingreso.precio = article.precio_venta
+      this.temp_ingreso_stock = article.stock
     },
     cleanListOfProducts() {
       this.ingreso.products = []
@@ -730,7 +732,7 @@ export default{
           "id_producto": this.ingreso.id_producto,
           "nombre": this.ingreso.nombre,
           "precio": this.ingreso.precio,
-          "cantidad": this.ingreso.cantidad,
+          "cantidad": parseInt(this.ingreso.cantidad) + parseInt(this.temp_ingreso_stock),
           "fecha": this.ingreso.fecha
         }
         // console.log(product);
@@ -750,8 +752,9 @@ export default{
         this.ingreso.id_producto = 0
         this.ingreso.select = null
         this.ingreso.nombre = ""
-        this.ingreso.precio = null,
+        this.ingreso.precio = null
         this.ingreso.cantidad = null
+        this.temp_ingreso_stock = 0
     },
     updateMultipleProductStock() {
       // axios request to save products
