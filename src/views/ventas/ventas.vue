@@ -1,32 +1,29 @@
 <template>
   <v-container>
     <v-card>
-      <div>
-        <h1>Ventas</h1>
-      </div>
-      <div>
-        
-        <h2>seleccione el tipo de Venta</h2>
+      <div>  
+        <v-card>
+          <h1>seleccione el tipo de Venta</h1>
         <v-layout class="overflow-visible" style="height: 56px;">
-      <v-bottom-navigation
-        v-model="value"
-        :bg-color="deep-orange"
-        mode="shift"
-      >
-        <v-btn
-        color="#2962FF" @click.stop="ventaDialog = true">
-          <v-icon>mdi-television-play</v-icon>
-
-          <span>Venta de producto</span>
-        </v-btn>
-
-        <v-btn color="#B71C1C" @click.stop="ventaDialogcomida = true">
-          <v-icon>mdi-music-note</v-icon>
-
-          <span>Venta de alimentos</span>
-        </v-btn>
-      </v-bottom-navigation>
+        <v-container>
+        <v-row no-gutters >
+          <v-col>
+            <v-btn tyle color="#00c853" @click.stop="ingresoDialog = true">
+              <v-icon left>mdi-cart-outline</v-icon>
+              venta interna
+            </v-btn>
+          </v-col>
+          <v-col>
+              <v-btn tyle color="#00c853" @click.stop="ingresoDialog = true">
+                <v-icon left>mdi-cart-outline</v-icon>
+                venta externa
+              </v-btn>
+            </v-col>
+        </v-row>
+      </v-container>
     </v-layout>
+        </v-card>
+        
        
       </div>
       
@@ -102,9 +99,9 @@
                   type="number"
                   outlined
                   required
-                ></v-text-field>
+                >kljnkdfggnkxgkdsgangfr</v-text-field>
                  <div>
-                  <v-label>Precio</v-label>
+                  <v-label>Preciooooo</v-label>
                   <v-text-field v-model="precio" variant="outlined"></v-text-field>
                 </div>  
                 </v-col>

@@ -1,21 +1,19 @@
 <template>
   <div>
     <v-container id="listar" fluid tag="section">
-      <v-card color="red-lighten-4" flat height="80px" rounded="0">
-        <v-toolbar class="font-weight-black my-3" elevation="1" rounded color="red-lighten-4 accent-4" density="compact">
-          <v-toolbar-title>Inventario de Cocina</v-toolbar-title>
-          <v-text-field class="spacing-playground pa-6" background-color="white" hide-details prepend-icon="mdi-magnify"
-            single-line>
-          </v-text-field>
-        </v-toolbar>
-      </v-card>
-      <div><v-btn to="/articulos/crear" fab darck color="#00c853"><v-icon>mdi-plus</v-icon></v-btn>
-
-      <h5>Agregar Articuloooo</h5>
-      <v-btn to="/src/views/articulos_cocina/Crearcomida.vue" fab darck color="#00c853"><v-icon>mdi-plus</v-icon></v-btn>
-
-        <h5>Agregar Comida</h5>
-    </div>
+        <div>
+          <v-container>
+            <v-row no-gutters >
+              <v-col>
+                <h3>agreagar comida al sistema</h3>
+                <v-btn tyle color="#F3AA60" @click.stop="ingresoDialog = true">
+                <v-icon left>mdi-cart-outline</v-icon>
+                crear comida
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+          </div>
       
       <v-simple-table>
         <thead>
