@@ -5,10 +5,9 @@
           <v-container>
             <v-row no-gutters >
               <v-col>
-                <h3>agreagar comida al sistema</h3>
-                <v-btn tyle color="#F3AA60" @click.stop="ingresoDialog = true">
+              <v-btn tyle color="#F3AA60" to="/articulos_cocina/crearcomida">
                 <v-icon left>mdi-cart-outline</v-icon>
-                crear comida
+                  Crear Comida
                 </v-btn>
               </v-col>
             </v-row>

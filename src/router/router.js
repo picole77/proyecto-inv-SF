@@ -67,6 +67,15 @@ const routes = [
     },
     component: () => import('@/views/articulos_cocina/CrearArticuloCocina.vue')
   },
+ //crear comida
+  {
+    path: '/articulos_cocina/crearcomida',
+    name: 'crear_comida',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/articulos_cocina/Crearcomida.vue')
+  },
     // editar
   {
     path: '/articulos-cocina/editar',
@@ -85,6 +94,32 @@ const routes = [
     },
     component: () => import('@/views/ventas/Ventas.vue'),
   },
+        //ventasproductos
+  {
+    path: '/ventas/Formventpro',
+    name: 'ventasProductos',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/ventas/Formventpro.vue'),
+  },
+  {
+    path: '/ventas/Ventcomida',
+    name: 'ventascomida',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/ventas/Ventcomida.vue'),
+  },
+  {
+    path: '/ventas/Formulario',
+    name: 'formulario',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/ventas/Formulario.vue'),
+  },
+
   {
     path: '/reportes',
     name: 'reportes',
