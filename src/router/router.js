@@ -57,6 +57,7 @@ const routes = [
     },
     component: () => import('@/views/articulos_cocina/ListarArticulosCocina.vue'),
   },
+  
   // crear
   {
     path: '/articulos-cocina/crear',
@@ -92,6 +93,54 @@ const routes = [
     },
     component: () => import('@/views/ventas/Recibo.vue')
   },
+  {
+    path: '/reportes/detalles',
+    name:'detalles_reporte',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/ventas/DetallesRecibo.vue')
+  },
+  {
+    path: '/reportes/detalles_almacen',
+    name: 'detalles_almacen',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/ventas/DetallesArticulo.vue')
+  },
+  {
+    path: '/reportes/detalles_cocina',
+    name: 'detalles_cocina',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/ventas/DetallesCocina.vue')
+  },
+  {
+    path: '/pdf/ventas',
+    name: 'pdf_ventas',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/pdfviews/PDFVenta.vue')
+  },
+  {
+    path: '/pdf/articulos',
+    name: 'pdf_articulos',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/pdfviews/PDFArticulo.vue')
+  },
+  {
+    path: '/pdf/cocina',
+    name: 'pdf_cocina',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/views/pdfviews/PDFCocina.vue')
+  }
 ]
 
 const router = new VueRouter({

@@ -19,6 +19,7 @@
             label="Fecha de ingreso"
             hint="MM/DD/YYYY format"
             type="date"
+            v-model="almacen.start_date"
             outlined
             required
           ></v-text-field>
@@ -27,6 +28,7 @@
             label="Fecha de ingreso"
             hint="MM/DD/YYYY format"
             type="date"
+            v-model="almacen.end_date"
             outlined
             required
           ></v-text-field>
@@ -35,7 +37,7 @@
         cols="12"
         md="2"
         >
-          <v-btn class="info">Generar</v-btn>
+          <v-btn :to="{name: 'detalles_almacen', params:{ name: 'Almacen',start_date: almacen.start_date, end_date: almacen.end_date }}" class="info">Ver</v-btn>
         </v-col>
       </v-row>
       <v-row>
@@ -56,6 +58,7 @@
             label="Fecha de ingreso"
             hint="MM/DD/YYYY format"
             type="date"
+            v-model="cocina.start_date"
             outlined
             required
           ></v-text-field>
@@ -64,6 +67,7 @@
             label="Fecha de ingreso"
             hint="MM/DD/YYYY format"
             type="date"
+            v-model="cocina.end_date"
             outlined
             required
           ></v-text-field>
@@ -72,7 +76,7 @@
         cols="12"
         md="2"
         >
-          <v-btn class="info">Generar</v-btn>
+          <v-btn :to="{name: 'detalles_cocina', params:{ name: 'Cocina',start_date: cocina.start_date, end_date: cocina.end_date }}" class="info">Ver</v-btn>
         </v-col>
       </v-row>
       <v-row>
@@ -93,6 +97,7 @@
             label="Fecha de ingreso"
             hint="MM/DD/YYYY format"
             type="date"
+            v-model="venta.start_date"
             outlined
             required
           ></v-text-field>
@@ -101,6 +106,7 @@
             label="Fecha de ingreso"
             hint="MM/DD/YYYY format"
             type="date"
+            v-model="venta.end_date"
             outlined
             required
           ></v-text-field>
@@ -109,7 +115,7 @@
         cols="12"
         md="2"
         >
-          <v-btn class="info">Generar</v-btn>
+          <v-btn :to="{name: 'detalles_reporte', params:{ name: 'Ventas',start_date: venta.start_date, end_date: venta.end_date }}" class="info">Ver</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -117,5 +123,21 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      venta: {
+        start_date: null,
+        end_date: null
+      },
+      almacen: {
+        start_date: null,
+        end_date: null
+      },
+      cocina: {
+        start_date: null,
+        end_date: null
+      }
+    }
+  }
 }
 </script>
