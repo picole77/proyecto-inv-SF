@@ -5,26 +5,25 @@
         <v-card>
           <h1>seleccione el tipo de Venta</h1>
         <v-layout class="overflow-visible" style="height: 56px;">
+
         <v-container>
-        <v-row no-gutters >
-          <v-col>
-            <v-btn tyle color="#00c853" @click.stop="ingresoDialog = true">
-              <v-icon left>mdi-cart-outline</v-icon>
-              venta interna
-            </v-btn>
-          </v-col>
-          <v-col>
-              <v-btn tyle color="#00c853" @click.stop="ingresoDialog = true">
+      <v-row no-gutters >
+         <v-col>
+              <v-btn tyle color="#00c853" to="/ventas/Formventpro">
                 <v-icon left>mdi-cart-outline</v-icon>
-                venta externa
+                Realiar una nueva venta
               </v-btn>
             </v-col>
-        </v-row>
-      </v-container>
+            <v-col>
+            <v-btn tyle color="#F3AA60" to="/ventas/Ventcomida">
+              <v-icon left>mdi-cart-outline</v-icon>
+                Comida
+              </v-btn>
+            </v-col>
+      </v-row>
+    </v-container>
     </v-layout>
         </v-card>
-        
-       
       </div>
       
       <v-container>
@@ -33,9 +32,11 @@
             <tr>
               <th>#ID</th>
               <th>Usuario</th>
-              <th>Cliente</th>
-              <th>Voucher</th>
-              <th>Descuento</th>
+              <th>Tipo Cliente</th>
+              <th>Tipo Venta</th>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
               <th>SubTotal</th>
               <th>Total</th>
               <th>Fecha</th>
@@ -49,8 +50,10 @@
                 <td>{{ venta.id }}</td>
                 <td>{{ venta.nombre_usuario }}</td>
                 <td>{{ venta.cliente }}</td>
-                <td>{{ venta.voucher }}</td>
-                <td>{{ venta.descuento }}</td>
+                <td>{{  }}</td>
+                <td>{{  }}</td>
+                <td>{{  }}</td>
+                <td>{{  }}</td>
                 <td>{{ venta.subtotal}}</td>
                 <td>{{ venta.total }}</td>
                 <td>{{ venta.fecha }}</td>
@@ -99,7 +102,7 @@
                   type="number"
                   outlined
                   required
-                >kljnkdfggnkxgkdsgangfr</v-text-field>
+                ></v-text-field>
                  <div>
                   <v-label>Preciooooo</v-label>
                   <v-text-field v-model="precio" variant="outlined"></v-text-field>

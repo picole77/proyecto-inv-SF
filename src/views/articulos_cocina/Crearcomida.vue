@@ -9,6 +9,13 @@
         <v-row>
             <v-col>
                 <form  v-on:submit.prevent="guardarArticulo()">
+                   
+                    <v-text-field color="#76FF03" v-model="articulo.descripcion"
+                        label="nombre"
+                        outlined
+                        required
+                        >
+                        </v-text-field>
                     <v-text-field color="#76FF03" v-model="articulo.descripcion"
                     label="descripción"
                     outlined
@@ -17,7 +24,7 @@
                     </v-text-field>
 
                     <v-text-field color="#4CAF50" v-model="articulo.precio"
-                    label="precio"
+                    label="precio de venta"
                     outlined
                     type="number"
                     prefix="$"
@@ -25,13 +32,7 @@
                     >
                     </v-text-field>
 
-                    <v-text-field color="red" v-model="articulo.stock"
-                    label="stock"
-                    outlined
-                    type="number"
-                    required
-                    >
-                    </v-text-field>
+                    
                     <v-card-actions>
                         <v-btn  to="/src/views/arti_cocina/listar.vue" color="#FF5722" class="mr-4">cancelar</v-btn>
                         <v-btn type="submit" color="#00C853" class="mr-4">guardar</v-btn>
