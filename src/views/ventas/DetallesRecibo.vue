@@ -17,7 +17,7 @@
             <tbody>
                 <tr v-for="venta in ventas" :key="venta.id">
                     <td>{{ venta.id }}</td>
-                    <td>{{ venta.fecha }}</td>
+                    <td>{{ formatDate(venta.fecha) }}</td>
                     <td>{{ venta.tipo_venta }}</td>
                     <td>{{ venta.tipo_cliente }}</td>
                     <td>{{ venta.total }}</td>
@@ -69,6 +69,10 @@ export default {
             .catch(error => {
                 console.log(error);
             })
+        },
+        formatDate(dateString) {
+            const options = { year: "numeric", month: "long", day: "numeric" }
+            return new Date(dateString).toLocaleDateString(undefined, options)
         }
     }
 }

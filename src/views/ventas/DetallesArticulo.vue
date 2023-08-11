@@ -15,7 +15,7 @@
             <tbody>
                 <tr v-for="articulo in articulos" :key="articulo.id">
                     <td>{{ articulo.id }}</td>
-                    <td>{{ articulo.fecha }}</td>
+                    <td>{{ formatDate(articulo.fecha) }}</td>
                     <td>{{ articulo.nombre }}</td>
                     <td>
                         <v-btn :to="{name: 'pdf_articulos', params: {id: articulo.id }}" fab small color="info"><v-icon>mdi-printer</v-icon></v-btn>
@@ -65,6 +65,10 @@ export default {
             .catch(error => {
                 console.log(error);
             })
+        },
+        formatDate(dateString) {
+            const options = { year: "numeric", month: "long", day: "numeric" }
+            return new Date(dateString).toLocaleDateString(undefined, options)
         }
     }
 }
