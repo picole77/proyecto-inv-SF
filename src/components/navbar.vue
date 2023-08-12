@@ -25,6 +25,11 @@
       <v-btn  target="_blank" text>
         <span class="font-weight-black">Inicio</span>
       </v-btn>
+      <router-link to="/src/components/Usuarios.vue">
+        <v-btn target ="_blank" text >
+          <span class="font-weight-black">usuarios</span>
+        </v-btn>
+      </router-link>
     </router-link>
     <router-link to="/articulos/listar" v-if="rolOfUser() === 1 || rolOfUser() === 2">
       <v-btn target ="_blank" text >

@@ -10,7 +10,7 @@
             <v-col>
                   <v-btn tyle color="#00c853" to="/ventas/Formventpro">
                     <v-icon left>mdi-cart-outline</v-icon>
-                    Realiar una nueva venta
+                    Realizar venta
                   </v-btn>
                 </v-col>
                 <v-col>

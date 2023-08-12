@@ -65,7 +65,15 @@ const routes = [
     meta: {
       requiresAuth: true
     },
-    component: () => import('@/views/articulos_cocina/CrearArticuloCocina.vue')
+  },
+    //Ususarios
+  {
+    path: '/src/components/Usuarios.vue',
+    name: 'usuarios',
+    meta: {
+      requiresAuth: true
+    },
+    component: () => import('@/components/Usuarios.vue')
   },
  //crear comida
   {
