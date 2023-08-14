@@ -379,7 +379,7 @@
                 @change="selectClient(entrega.clientes.id)"
                 v-model="entrega.clientes"
                 :items="clientes" 
-                item-text="nombre"
+                item-text="tipo_cliente"
                 item-value="id"
                 return-object
                 required

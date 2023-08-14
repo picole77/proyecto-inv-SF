@@ -7,17 +7,22 @@
         label="Fecha de caducidad"
         hint="MM/DD/YYYY format"
         type="date"
-        name="caducidad"
+        name="fecha"
         outlined
         required
       ></v-text-field>
 
-      <div class=" ">
+      <div class="">
         <v-select
+        @change="selectTypeClient(tipo_cliente)"
           v-model="tipo_cliente"
           :items="tipocliente"
+          item-text="tipo_cliente"
+          item-value="id"
+          return-object
           :rules="[(v) => !!v || 'Item is required']"
-          label="tipo de Cliente"
+          label="Tipo de Cliente"
+          name="tipo_cliente"
           required
         ></v-select>
 
@@ -30,10 +35,12 @@
         ></v-text-field> -->
 
         <v-select
+          @change="selectTypeSale(tipo_venta)"
           v-model="tipo_venta"
           :items="tipoventas"
           :rules="[(v) => !!v || 'Item is required']"
-          label="tipo de venta"
+          label="Tipo de venta"
+          name="tipo_venta"
           required
         ></v-select>
 
@@ -44,6 +51,7 @@
           item-text="nombre"
           item-value="id"
           return-object
+          name="producto"
           :rules="[(v) => !!v || 'Item is required']"
           label="seleccione producto"
           required
@@ -57,6 +65,7 @@
           return-object  
           :rules="[(v) => !!v || 'Item is required']"
           label="Cantidad"
+          name="cantidad"
           required
         ></v-select>
 
@@ -72,7 +81,8 @@
           :items="itemcomida"
           item-text="nombre"
           item-value="id"
-          return-object 
+          return-object
+          name="item_comida" 
           label="seleccione tipo de comida" 
           required></v-select>
   
@@ -82,9 +92,9 @@
           item-text="nombre"
           item-value="id"
           return-object   
-          label="Cantidad" 
+          label="Cantidad"
+          name="item_cantidad" 
           required></v-select>
-  
           <div>
             <v-label>Precio</v-label>
             <v-text-field v-model="item_precio" variant="outlined"></v-text-field>
@@ -99,12 +109,12 @@
           Cancelar
         </v-btn>
       </div>
-      <div class="mt-4">
+      <div class="mt-4 d-flex justify-center align-items-center">
         <v-btn
             :disabled="!valid"
             color="success"
             class="mr-4"
-            @click="saveProducts"
+            @click="saveProducts()"
           >
             Realizar venta
         </v-btn>
@@ -122,6 +132,7 @@ export default {
   data: () => ({
     date: new Date().toISOString().split('T')[0],
     temp_list_products: [],
+    client_id: null,
     tipo_cliente: null,
     tipo_venta: null,
     precio: null,
@@ -147,7 +158,7 @@ export default {
     ],
     items_products: [{id: 1, nombre:"1 piezas"}, {id: 2,nombre:"2 piezas"}, {id: 3,nombre:"3 piezas"}, {id: 4,nombre:"4 piezas"}],
     itemproducto: [],
-    tipocliente: ["Cliente Interno", "Cliente Externo"],
+    tipocliente: [],
     tipoventas: ["Venta", "Cortesia"],
     items: [ 
       {
@@ -184,10 +195,6 @@ export default {
       }
     ],
     itemcomida: [],
-    tipocliente: [
-      'Cliente Interno',
-      'Cliente Externo',
-    ],
     tipoventas: [
       'Venta',
       'Cortesia',
@@ -196,6 +203,7 @@ export default {
   mounted() {
     this.showProducts()
     this.showProductsCocina()
+    this.showTypeClient()
     this.usuario = this.loadUser()
   },
   methods: {
@@ -208,11 +216,19 @@ export default {
       const cocinaProduct = this.itemcomida.find(item => item.id === id)
       this.item_precio = cocinaProduct.precio
     },
+    selectTypeClient(type) {
+      console.log(type);
+      this.tipo_cliente = type.tipo_cliente
+      this.client_id = type.id
+    },
+    selectTypeSale(type) {
+      console.log(type);
+      this.tipo_venta = type
+    },
     validate() {
       let self = this
       if(this.producto !== null && this.cantidad !== null && this.precio !== null) {
         this.temp_list_products.push({
-          "client_id": 0,
           "product_id": this.producto.id,
           "cantidad": this.cantidad.id,
           "amount": this.precio
@@ -223,15 +239,11 @@ export default {
           text: 'Se ha agregado el producto',
           type: 'info',
           timer: 1500
-        }).then( () => {
-          self.producto = null
-          self.cantidad = null,
-          self.precio = null
         })
       }
+
       if(this.item_comida !== null && this.item_cantidad !== null && this.item_precio !== null) {
         this.temp_list_products.push({
-          "client_id": 0,
           "product_id": this.item_comida.id,
           "cantidad": this.item_cantidad.id,
           "amount": this.item_precio
@@ -245,9 +257,7 @@ export default {
           type: 'info',
           timer: 1500
         }).then( () => {
-          self.item_cantidad = null
-          self.item_comida = null,
-          self.item_precio = null
+          window.location.reload()
         })
       }
 
@@ -269,15 +279,14 @@ export default {
     },
     saveProducts() {
       let self = this
-
-      if(this.$refs.form.validate()) {
+      if(this.$refs.form.validate() ){
         const form = {
-          "tipo_venta": this.tipo_venta,
-          "tipo_cliente": this.tipo_cliente,
+          "tipo_venta": self.tipo_venta,
+          "tipo_cliente": self.tipo_cliente,
           "productos": this.temp_list_products,
           "fecha": this.date,
-          "client_id": 0,
           "usuario_id": this.usuario,
+          "client_id": this.client_id,
           "total": this.total ?? 0
         }
 
@@ -327,6 +336,12 @@ export default {
           type: 'error',
           timer: 1500
         })
+      })
+    },
+    showTypeClient() {
+      axios.get(`${url}clientes?page=1&limit=25`)
+      .then(response => {
+        this.tipocliente = response.data.data
       })
     }
   },
