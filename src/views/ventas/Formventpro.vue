@@ -284,6 +284,7 @@ export default {
           "tipo_venta": self.tipo_venta,
           "tipo_cliente": self.tipo_cliente,
           "productos": this.temp_list_products,
+          "comidas": this.temp_list_products_cocina,
           "fecha": this.date,
           "usuario_id": this.usuario,
           "client_id": this.client_id,
@@ -296,28 +297,9 @@ export default {
             title: 'Venta realizada',
             text: `${response.data.message}`,
             type: 'success'
-          })
-        })
-        .catch( (error) => {
-          VueSimpleAlert.fire({
-            title: 'Error',
-            text: 'Ah ocurrido un error al tratar de realizar la venta',
-            type: 'error',
-            timer: 1500
-          })
-        })
-        const form_comida = {
-          "tipo_venta": self.tipo_venta,
-          "tipo_cliente": self.tipo_cliente,
-          "productos": this.temp_list_products_cocina,
-          "fecha": this.date,
-          "usuario_id": this.usuario,
-          "client_id": this.client_id,
-          "total": this.total ?? 0
-        }
-        axios.post(`${url}ventas/registrar/comida`, form_comida)
-        .then( (response) => {
+          }).then( () => {
             self.$router.push('/ventas')
+          })
         })
         .catch( (error) => {
           VueSimpleAlert.fire({
