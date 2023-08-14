@@ -314,8 +314,6 @@
             </v-card>
           </v-dialog>
       </v-layout>
-
-  
   </v-container>
 </template>
 
@@ -330,6 +328,7 @@ export default {
   //siempre declarar un data
   data() {
     return {
+      ventaDialog :false,
       ventaComidaDialog:false,
       ventaProductDialog: false,
       ventas: [],
