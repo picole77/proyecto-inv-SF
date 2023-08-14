@@ -111,7 +111,6 @@
       </div>
       <div class="mt-4 d-flex justify-center align-items-center">
         <v-btn
-            :disabled="!valid"
             color="success"
             class="mr-4"
             @click="saveProducts()"
@@ -132,6 +131,7 @@ export default {
   data: () => ({
     date: new Date().toISOString().split('T')[0],
     temp_list_products: [],
+    temp_list_products_cocina: [],
     client_id: null,
     tipo_cliente: null,
     tipo_venta: null,
@@ -243,7 +243,7 @@ export default {
       }
 
       if(this.item_comida !== null && this.item_cantidad !== null && this.item_precio !== null) {
-        this.temp_list_products.push({
+        this.temp_list_products_cocina.push({
           "product_id": this.item_comida.id,
           "cantidad": this.item_cantidad.id,
           "amount": this.item_precio
@@ -257,7 +257,7 @@ export default {
           type: 'info',
           timer: 1500
         }).then( () => {
-          window.location.reload()
+          this.reset()
         })
       }
 
@@ -296,9 +296,28 @@ export default {
             title: 'Venta realizada',
             text: `${response.data.message}`,
             type: 'success'
-          }).then( () => {
-            self.$router.push('/ventas')
           })
+        })
+        .catch( (error) => {
+          VueSimpleAlert.fire({
+            title: 'Error',
+            text: 'Ah ocurrido un error al tratar de realizar la venta',
+            type: 'error',
+            timer: 1500
+          })
+        })
+        const form_comida = {
+          "tipo_venta": self.tipo_venta,
+          "tipo_cliente": self.tipo_cliente,
+          "productos": this.temp_list_products_cocina,
+          "fecha": this.date,
+          "usuario_id": this.usuario,
+          "client_id": this.client_id,
+          "total": this.total ?? 0
+        }
+        axios.post(`${url}ventas/registrar/comida`, form_comida)
+        .then( (response) => {
+            self.$router.push('/ventas')
         })
         .catch( (error) => {
           VueSimpleAlert.fire({

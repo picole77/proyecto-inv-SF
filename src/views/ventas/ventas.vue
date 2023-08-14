@@ -13,12 +13,12 @@
                     Realizar venta
                   </v-btn>
                 </v-col>
-                <v-col>
-                <v-btn tyle color="#F3AA60" to="/ventas/Ventcomida">
-                  <v-icon left>mdi-cart-outline</v-icon>
-                    Comida
+                <!-- <v-col>
+                  <v-btn tyle color="#F3AA60" to="/ventas/Ventcomida">
+                    <v-icon left>mdi-cart-outline</v-icon>
+                      Comida
                   </v-btn>
-                </v-col>
+                </v-col> -->
           </v-row>
         </v-container>
       </v-layout>
@@ -35,7 +35,6 @@
               <th>Producto</th>
               <th>Precio</th>
               <th>Cantidad</th>
-              <th>SubTotal</th>
               <th>Total</th>
               <th>Fecha</th>
             </tr>
@@ -47,12 +46,11 @@
             >
                 <td>{{ venta.id }}</td>
                 <td>{{ venta.nombre_usuario }}</td>
-                <td>{{ venta.cliente }}</td>
-                <td>{{  }}</td>
-                <td>{{  }}</td>
-                <td>{{  }}</td>
-                <td>{{  }}</td>
-                <td>{{ venta.subtotal}}</td>
+                <td>{{ venta.tipo_cliente }}</td>
+                <td>{{ venta.tipo_venta }}</td>
+                <td>{{ venta.nombre }}</td>
+                <td>{{ venta.precio }}</td>
+                <td>{{ venta.cantidad }}</td>
                 <td>{{ venta.total }}</td>
                 <td>{{ venta.fecha }}</td>
             </tr>
