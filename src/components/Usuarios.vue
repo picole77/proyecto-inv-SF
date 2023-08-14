@@ -30,16 +30,13 @@
               ID
             </th>
             <th class="primary--text">
-              nombre
+              Nombre Completo
             </th>
             <th class="primary--text">
-              Apellido
+              Usuario
             </th>
             <th class="primary--text">
               Email
-            </th>
-            <th class="primary--text">
-              Telefono
             </th>
             <th class="primary--text">
               Rol
@@ -53,14 +50,60 @@
             <th class="text-right primary--text">
               Acciones
             </th>
-            <th><v-btn :to="{ name: 'editar_articulo', params: {  } }" fab small color="light-blue"><v-icon>mdi-pencil</v-icon></v-btn>
-              <v-btn @click.stop="" @click="" fab small color="orange darken-4"><v-icon>mdi-delete</v-icon></v-btn>
-            </th>
-             
           </tr>
         </thead>
+        <tbody>
+          <tr v-for="usuario in usuarios" v-bind:key="usuario.id">
+            <td>{{ usuario.id }}</td>
+            <td>{{ usuario.nombre_completo }}</td>
+            <td>{{ usuario.nombre_usuario }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.rol_id }}</td>
+            <td>{{ usuario.estatus }}</td>
+            <td>
+              <img :src='url+usuario.imagen' :alt="usuario.nombre_usuario">
+            </td>
+            <td>
+              <v-btn fab small color="light-blue"><v-icon>mdi-pencil</v-icon></v-btn>
+              <v-btn fab small color="orange darken-4"><v-icon>mdi-delete</v-icon></v-btn>
+            </td>
+          </tr>
+        </tbody>
       </v-simple-table>
    </div>
   
 </template>
+<script>
+  const url = "http://localhost:3000/api/"
+  let imageURL = "http://localhost:3000/images/"
+  import axios from 'axios'
+  import VueSimpleAlert from 'vue-simple-alert'
 
+  export default {
+    data() {
+      return {
+        usuarios: [],
+        url: imageURL
+      }
+    },
+    mounted() {
+      this.showUsers()
+    },
+    methods: {
+      showUsers() {
+        axios.get(`${url}usuarios`)
+        .then(response => {
+          this.usuarios = response.data.data
+        })
+        .catch(error => {
+          VueSimpleAlert.fire({
+            title: 'Error',
+            text: 'Ocurrió un error al obtener la lista de usuarios',
+            type: 'error',
+            timer: 1500
+          })
+        })
+      }
+    }
+  }
+</script>

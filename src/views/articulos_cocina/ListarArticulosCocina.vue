@@ -21,50 +21,34 @@
               #ID
             </th>
             <th class="primary--text">
-              Codigo de Barras
+              Comida
             </th>
             <th class="primary--text">
-              Producto
+              Descripción
             </th>
             <th class="primary--text">
               Precio
             </th>
-            <th class="primary--text">
-              Stock
+            <th>
+              Fecha
             </th>
-            <th class="primary--text">
-              Caducidad
-            </th>
-            <th class="primary--text">
-              Entregó
-            </th>
-            <th class="primary--text">
-              Recibió
-            </th>
-            <th class="primary--text">
-              Imagen
-            </th>
-            <th class="primary--text">
+            <th class="primary--text text-center">
               Opciones
             </th>
           </tr>
         </thead>
 
         <tbody class="font-weight-bold">
-          <tr v-for="articulo in articulos" :key="articulo.id">
-            <td>{{ articulo.id }}</td>
-            <td>{{ articulo.codigo_barras}}</td>
-            <td>{{ articulo.producto }}</td>
-            <td>{{ articulo.precio }}</td>
-            <td>{{ articulo.stock }}</td>
-            <td>{{ articulo.caducidad }}</td>
-            <td>{{ articulo.usuario }}</td>
-            <td>{{ articulo.cliente }}</td>
-            <td><img :src='url+articulo.imagen' :alt="articulo.nombre" width="80"></td>
+          <tr v-for="comida in cocina" :key="comida.id">
+            <td>{{ comida.id }}</td>
+            <td>{{ comida.nombre}}</td>
+            <td>{{ comida.descripcion }}</td>
+            <td>{{ comida.precio }}</td>
+            <td>{{ comida.created_at }}</td>
             <td>
-              <v-btn :to="{ name: 'editar', params: { id: articulo.id } }" fab small
+              <v-btn :to="{ name: 'editar', params: { id: comida.id } }" fab small
                 color="light-blue"><v-icon>mdi-pencil</v-icon></v-btn>
-              <v-btn @click.stop="dialog = true" @click=" id = articulo.id" fab small
+              <v-btn @click.stop="dialog = true" @click=" id = comida.id" fab small
                 color="orange darken-4"><v-icon>mdi-delete</v-icon></v-btn>
             </td>
           </tr>
@@ -97,21 +81,21 @@ export default {
     return {
       dialog: false,
       url: imageURL,
-      articulos:[]
+      cocina:[]
     }
   },
   methods: {
     obtenerArticulos() {
-      axios.get(`${url}cocina?page=1&limit=25`)
+      axios.get(`${url}articulos/cocina?page=1&limit=25`)
         .then(response => {
-          this.articulos = response.data.data;
+          this.cocina = response.data.data;
         })
         .catch((error) => {
           console.log(error);
         })
     },
     confirmarBorrado(id) {
-      axios.delete(url + id)
+      axios.delete(`${url}/cocina/eliminar` + id)
         .then(() => {
           this.obtenerArticulos();
           this.dialog = false;
