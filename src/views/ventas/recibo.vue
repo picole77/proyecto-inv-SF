@@ -127,15 +127,15 @@ export default {
     return {
       venta: {
         start_date: null,
-        end_date: null
+        end_date: new Date().toISOString().split('T')[0]
       },
       almacen: {
         start_date: null,
-        end_date: null
+        end_date: new Date().toISOString().split('T')[0]
       },
       cocina: {
         start_date: null,
-        end_date: null
+        end_date: new Date().toISOString().split('T')[0]
       }
     }
   }

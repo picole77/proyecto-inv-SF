@@ -20,7 +20,7 @@
                     <td>{{ articulo.nombre }}</td>
                     <td>{{ formatDate(articulo.caducidad) }}</td>
                     <td>
-                        <v-btn :to="{name: 'pdf_articulos', params: {id: articulo.id }}" fab small color="info"><v-icon>mdi-printer</v-icon></v-btn>
+                        <v-btn :to="{name: 'pdf_cocina', params: {id: articulo.id }}" fab small color="info"><v-icon>mdi-printer</v-icon></v-btn>
                     </td>
                 </tr>
             </tbody>
