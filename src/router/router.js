@@ -68,7 +68,7 @@ const routes = [
   },
     //Ususarios
   {
-    path: '/src/components/Usuarios.vue',
+    path: '/usuarios',
     name: 'usuarios',
     meta: {
       requiresAuth: true

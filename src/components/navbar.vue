@@ -25,7 +25,7 @@
       <v-btn  target="_blank" text>
         <span class="font-weight-black">Inicio</span>
       </v-btn>
-      <router-link to="/src/components/Usuarios.vue">
+      <router-link to="/usuarios">
         <v-btn target ="_blank" text >
           <span class="font-weight-black">usuarios</span>
         </v-btn>
